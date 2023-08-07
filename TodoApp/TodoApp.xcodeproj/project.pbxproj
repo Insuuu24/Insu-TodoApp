@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB76EAC32A8086E300D57868 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EAC22A8086E300D57868 /* ColorCell.swift */; };
+		EB76EAC52A80872100D57868 /* TodoWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EAC42A80872100D57868 /* TodoWriteCell.swift */; };
+		EB76EAC72A80873500D57868 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EAC62A80873500D57868 /* DateCell.swift */; };
+		EB76EAC92A80B7A800D57868 /* SaveButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EAC82A80B7A800D57868 /* SaveButtonCell.swift */; };
+		EB76EACB2A80C16100D57868 /* DatePickerPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */; };
 		EBABFB492A7F73EC00BAB00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */; };
 		EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */; };
 		EBABFB4D2A7F73EC00BAB00E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EB76EAC22A8086E300D57868 /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
+		EB76EAC42A80872100D57868 /* TodoWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWriteCell.swift; sourceTree = "<group>"; };
+		EB76EAC62A80873500D57868 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		EB76EAC82A80B7A800D57868 /* SaveButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonCell.swift; sourceTree = "<group>"; };
+		EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerPopupView.swift; sourceTree = "<group>"; };
 		EBABFB452A7F73EC00BAB00E /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +55,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB76EAC12A8086A500D57868 /* TodoAddViews */ = {
+			isa = PBXGroup;
+			children = (
+				EB76EAC22A8086E300D57868 /* ColorCell.swift */,
+				EB76EAC42A80872100D57868 /* TodoWriteCell.swift */,
+				EB76EAC62A80873500D57868 /* DateCell.swift */,
+				EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */,
+				EB76EAC82A80B7A800D57868 /* SaveButtonCell.swift */,
+			);
+			path = TodoAddViews;
+			sourceTree = "<group>";
+		};
 		EBABFB3C2A7F73EC00BAB00E = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +108,7 @@
 		EBABFB5D2A7F8B4600BAB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EB76EAC12A8086A500D57868 /* TodoAddViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,12 +198,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBABFB602A7F8CED00BAB00E /* TodoListViewController.swift in Sources */,
+				EB76EAC72A80873500D57868 /* DateCell.swift in Sources */,
+				EB76EAC32A8086E300D57868 /* ColorCell.swift in Sources */,
+				EB76EACB2A80C16100D57868 /* DatePickerPopupView.swift in Sources */,
 				EBABFB4D2A7F73EC00BAB00E /* HomeViewController.swift in Sources */,
 				EBABFB492A7F73EC00BAB00E /* AppDelegate.swift in Sources */,
 				EBABFB662A7FBE8D00BAB00E /* TodoAddViewController.swift in Sources */,
 				EBABFB622A7F8D0600BAB00E /* TodoCompleteViewController.swift in Sources */,
 				EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */,
 				EBABFB642A7F8D1600BAB00E /* TodoDetailViewController.swift in Sources */,
+				EB76EAC52A80872100D57868 /* TodoWriteCell.swift in Sources */,
+				EB76EAC92A80B7A800D57868 /* SaveButtonCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
