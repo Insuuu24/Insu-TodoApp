@@ -1,9 +1,4 @@
-//
-//  TodoCompleteViewController.swift
-//  TodoApp
-//
-//  Created by Insu on 2023/08/06.
-//
+
 
 import UIKit
 

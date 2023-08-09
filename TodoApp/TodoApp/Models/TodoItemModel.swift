@@ -1,9 +1,4 @@
-//
-//  TodoItem.swift
-//  TodoApp
-//
-//  Created by Insu on 2023/08/08.
-//
+
 
 import UIKit
 

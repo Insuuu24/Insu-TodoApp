@@ -1,9 +1,4 @@
-//
-//  DatePickerPopupView.swift
-//  TodoApp
-//
-//  Created by Insu on 2023/08/07.
-//
+
 
 import UIKit
 
@@ -80,7 +75,6 @@ class DatePickerPopupView: UIView {
             
             cancelButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 10),
             cancelButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            
             cancelButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
