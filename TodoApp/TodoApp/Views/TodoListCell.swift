@@ -13,7 +13,7 @@ class TodoListCell: UITableViewCell {
         return view
     }()
     
-    private lazy var todoLabel: UILabel = {
+    lazy var todoLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
@@ -88,6 +88,18 @@ class TodoListCell: UITableViewCell {
             buttonImageView.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
+    
+    // MARK: - Method & Action
+    
+    func applyStrikeThrough() {
+        guard let currentText = todoLabel.text else { return }
+        let attributedString = NSMutableAttributedString(string: currentText)
+        attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributedString.length))
+        todoLabel.attributedText = attributedString
+    }
+
+    
+    
     
     // MARK: - configure
     

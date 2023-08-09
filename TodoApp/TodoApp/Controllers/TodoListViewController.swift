@@ -5,14 +5,17 @@ import UIKit
 class TodoListViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var todoItems: [TodoItem] {
+        get { return TodoManager.shared.todoItems }
+        set { TodoManager.shared.todoItems = newValue }
+    }
 
     private let listTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
-    var todoItems: [TodoItem] = []
     
     // MARK: - View Life Cycle
     
@@ -55,6 +58,8 @@ class TodoListViewController: UIViewController {
         navigationController.modalPresentationStyle = .pageSheet
         let sheet = navigationController.presentationController as? UISheetPresentationController
         sheet?.detents = [.medium()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.preferredCornerRadius = 25
         sheet?.animateChanges {
             sheet?.selectedDetentIdentifier = .medium
         }
@@ -66,7 +71,7 @@ class TodoListViewController: UIViewController {
     
     
     
-    // MARK: - Method & Action
+    // MARK: - Setup Layout
     
     private func setupTableView() {
         view.addSubview(listTableView)
@@ -119,16 +124,29 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
-            self.todoItems.remove(at: indexPath.row)
+            TodoManager.shared.todoItems.remove(at: indexPath.row) // 여기에서도 TodoManager를 사용하여 항목 삭제
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
-        
+
         if let trashImage = UIImage(systemName: "trash") {
             deleteAction.image = trashImage
         }
-        
+
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let completeAction = UIContextualAction(style: .normal, title: "완료") { (action, view, completionHandler) in
+            let completedItem = self.todoItems[indexPath.row]
+            TodoManager.shared.completedItems.append(completedItem) // 완료한 목록에 추가
+            TodoManager.shared.todoItems.remove(at: indexPath.row) // 현재 목록에서 제거
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completionHandler(true)
+        }
+        completeAction.backgroundColor = .blue // 예시로 파란색 설정
+
+        return UISwipeActionsConfiguration(actions: [completeAction])
     }
 
 
@@ -145,7 +163,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension TodoListViewController: TodoAddViewControllerDelegate {
     func didAddTodoItem(_ item: TodoItem) {
-        todoItems.append(item)
+        TodoManager.shared.todoItems.append(item) // 여기에서도 TodoManager를 사용하여 항목 추가
         listTableView.reloadData()
     }
 }

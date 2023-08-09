@@ -23,13 +23,14 @@ class TodoAddViewController: UIViewController {
         return label
     }()
     
-    lazy var redButton: UIButton = createColorButton(color: .red)
+    lazy var yellowButton: UIButton = createColorButton(color: .yellow)
     lazy var greenButton: UIButton = createColorButton(color: .green)
     lazy var blueButton: UIButton = createColorButton(color: .blue)
     lazy var pinkButton: UIButton = createColorButton(color: .systemPink)
+    lazy var indigoButton: UIButton = createColorButton(color: .systemIndigo)
 
     lazy var colorsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [redButton, greenButton, blueButton, pinkButton])
+        let stackView = UIStackView(arrangedSubviews: [yellowButton, greenButton, blueButton, pinkButton, indigoButton])
         stackView.axis = .horizontal
         stackView.spacing = 20
         stackView.alignment = .center
@@ -232,14 +233,14 @@ class TodoAddViewController: UIViewController {
     
     private func updateButtonBorders() {
         
-        for button in [redButton, greenButton, blueButton, pinkButton] {
+        for button in [yellowButton, greenButton, blueButton, pinkButton, indigoButton] {
             button.layer.borderWidth = 0
             button.layer.borderColor = UIColor.clear.cgColor
         }
         
-        if selectedColor == .red {
-            redButton.layer.borderWidth = 3
-            redButton.layer.borderColor = UIColor.lightGray.cgColor
+        if selectedColor == .yellow {
+            yellowButton.layer.borderWidth = 3
+            yellowButton.layer.borderColor = UIColor.lightGray.cgColor
         } else if selectedColor == .green {
             greenButton.layer.borderWidth = 3
             greenButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -249,18 +250,23 @@ class TodoAddViewController: UIViewController {
         } else if selectedColor == .systemPink {
             pinkButton.layer.borderWidth = 3
             pinkButton.layer.borderColor = UIColor.lightGray.cgColor
+        } else if selectedColor == .systemIndigo {
+            indigoButton.layer.borderWidth = 3
+            indigoButton.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
     
     @objc func colorButtonTapped(sender: UIButton) {
-        if sender == redButton {
-            selectedColor = .red
+        if sender == yellowButton {
+            selectedColor = .yellow
         } else if sender == greenButton {
             selectedColor = .green
         } else if sender == blueButton {
             selectedColor = .blue
         } else if sender == pinkButton {
             selectedColor = .systemPink
+        } else if sender == indigoButton {
+            selectedColor = .systemIndigo
         }
 
         updateButtonBorders()
@@ -313,7 +319,7 @@ class TodoAddViewController: UIViewController {
             return
         }
 
-        let finalSelectedColor = selectedColor ?? .red
+        let finalSelectedColor = selectedColor ?? .yellow
         let todoItem = TodoItem(color: finalSelectedColor, content: content, date: selectedDate ?? Date())
 
         delegate?.didAddTodoItem(todoItem)
