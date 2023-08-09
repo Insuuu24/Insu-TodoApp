@@ -9,6 +9,7 @@ import UIKit
 
 class DatePickerPopupView: UIView {
     
+    // MARK: - Properties
     
     private var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -34,14 +35,18 @@ class DatePickerPopupView: UIView {
     var onSelectDate: ((Date) -> Void)?
     var onCancel: (() -> Void)?
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("")
     }
+    
+    // MARK: - Setup Layout
     
     private func setupLayout() {
         let contentView = UIView()
@@ -80,7 +85,7 @@ class DatePickerPopupView: UIView {
         ])
     }
 
-
+    // MARK: - Method & Action
     
     @objc private func handleDone() {
         onSelectDate?(datePicker.date)

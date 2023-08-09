@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     @IBOutlet weak var introLabel: UILabel!
@@ -22,20 +22,19 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-
+    
     
     // MARK: - Method & Action
     
@@ -43,25 +42,21 @@ class HomeViewController: UIViewController {
         
         let todoListAction = UIAction(title: "Todo List", image: UIImage(systemName: "list.bullet"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
-            if let todoListVC = self.storyboard?.instantiateViewController(withIdentifier: "todoListViewController") as? TodoListViewController {
-                self.navigationController?.pushViewController(todoListVC, animated: true)
-            }
+            let todoListVC = TodoListViewController()
+            self.navigationController?.pushViewController(todoListVC, animated: true)
         }
         
         let todoCompleteListAction = UIAction(title: "완료한 Todo", image: UIImage(systemName: "checkmark.square"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
-            if let todoCompleteVC = self.storyboard?.instantiateViewController(withIdentifier: "todoCompleteListViewController") as? TodoCompleteViewController {
-                self.navigationController?.pushViewController(todoCompleteVC, animated: true)
-            }
+            let todoCompleteVC = TodoCompleteViewController()
+            self.navigationController?.pushViewController(todoCompleteVC, animated: true)
         }
         
         let menu = UIMenu(title: "Todo List Menu", identifier: nil, options: .displayInline, children: [todoCompleteListAction, todoListAction])
         sender.menu = menu
-        sender.showsMenuAsPrimaryAction = true
-    }
-}
-        
+        sender.showsMenuAsPrimaryAction = true}
     
+}
     
     
     
