@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB1C38542A84C302006AA4CC /* TodoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */; };
 		EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */; };
 		EB3C49FF2A81D5F400F4B291 /* TodoItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3C49FE2A81D5F400F4B291 /* TodoItemModel.swift */; };
 		EB76EACB2A80C16100D57868 /* DatePickerPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEditViewController.swift; sourceTree = "<group>"; };
 		EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
 		EB3C49FE2A81D5F400F4B291 /* TodoItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemModel.swift; sourceTree = "<group>"; };
 		EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerPopupView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */,
 				EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */,
 				EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */,
+				EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */,
 				EBABFB612A7F8D0600BAB00E /* TodoCompleteViewController.swift */,
 			);
 			path = Controllers;
@@ -201,6 +204,7 @@
 				EBABFB622A7F8D0600BAB00E /* TodoCompleteViewController.swift in Sources */,
 				EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */,
 				EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */,
+				EB1C38542A84C302006AA4CC /* TodoEditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

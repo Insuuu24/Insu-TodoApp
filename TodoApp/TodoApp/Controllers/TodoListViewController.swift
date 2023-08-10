@@ -17,6 +17,7 @@ class TodoListViewController: UIViewController {
         return tableView
     }()
     
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class TodoListViewController: UIViewController {
         setupTableView()
 
     }
+    
     
     // MARK: - Navigation Bar
     
@@ -65,10 +67,6 @@ class TodoListViewController: UIViewController {
     }
 
     
-    
-    
-    
-    
     // MARK: - Setup Layout
     
     private func setupTableView() {
@@ -78,7 +76,7 @@ class TodoListViewController: UIViewController {
         listTableView.dataSource = self
         listTableView.register(TodoListCell.self, forCellReuseIdentifier: "TodoListCell")
 
-        listTableView.estimatedRowHeight = 50.0
+        listTableView.estimatedRowHeight = 100
         listTableView.rowHeight = UITableView.automaticDimension
         
         NSLayoutConstraint.activate([
@@ -90,10 +88,8 @@ class TodoListViewController: UIViewController {
     }
 
 
-    
-    
-
 }
+
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
@@ -150,10 +146,29 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let editVC = TodoEditViewController()
+        editVC.delegate = self
+        editVC.todoItem = todoItems[indexPath.row]
+        editVC.todoItemIndex = indexPath.row
+        
+        let navigationController = UINavigationController(rootViewController: editVC)
+        navigationController.modalPresentationStyle = .pageSheet
+        let sheet = navigationController.presentationController as? UISheetPresentationController
+        sheet?.detents = [.medium()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.preferredCornerRadius = 25
+        sheet?.animateChanges {
+            sheet?.selectedDetentIdentifier = .medium
+        }
+        present(navigationController, animated: true, completion: nil)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
 }
+
 
 // MARK: - TodoAddViewControllerDelegate
 
@@ -163,9 +178,21 @@ extension TodoListViewController: TodoAddViewControllerDelegate {
     
         let newIndexPath = IndexPath(row: todoItems.count - 1, section: 0)
 
-        // 셀 추가 + 애니메이셔
+        // 셀 추가 + 애니메이션
         listTableView.beginUpdates()
         listTableView.insertRows(at: [newIndexPath], with: .automatic)
         listTableView.endUpdates()
+    }
+}
+
+
+// MARK: - TodoEditViewControllerDelegate
+
+extension TodoListViewController: TodoEditViewControllerDelegate {
+    func didUpdateTodoItem(_ item: TodoItem, at index: Int) {
+        TodoManager.shared.todoItems[index] = item
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        listTableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

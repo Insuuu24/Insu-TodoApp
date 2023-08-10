@@ -2,19 +2,21 @@
 
 import UIKit
 
-protocol TodoAddViewControllerDelegate: AnyObject {
-    func didAddTodoItem(_ item: TodoItem)
+protocol TodoEditViewControllerDelegate: AnyObject {
+    func didUpdateTodoItem(_ item: TodoItem, at index: Int)
 }
 
-class TodoAddViewController: UIViewController {
-
+class TodoEditViewController: UIViewController {
+    
     // MARK: - Properties
     
-    weak var delegate: TodoAddViewControllerDelegate?
+    weak var delegate: TodoEditViewControllerDelegate?
+    
+    var todoItem: TodoItem?
+    var todoItemIndex: Int?
     
     private var selectedColor: UIColor?
     private var selectedDate: Date?
-
     
     let colorPickerHeader: UILabel = {
         let label = UILabel()
@@ -102,7 +104,7 @@ class TodoAddViewController: UIViewController {
     
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("저장", for: .normal)
+        button.setTitle("수정", for: .normal)
         button.backgroundColor = .lightGray
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
@@ -110,24 +112,22 @@ class TodoAddViewController: UIViewController {
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
-
-
+    
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Todo 추가"
+        self.title = "Todo 수정"
         view.backgroundColor = .white
         
         todoTextField.delegate = self
         
         setupNavigationBar()
         setupLayout()
-
+        setupInitialData()
     }
-    
     
     
     // MARK: - Navigation Bar
@@ -138,9 +138,6 @@ class TodoAddViewController: UIViewController {
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
-    
-    
     
     
     // MARK: - Setup Layout
@@ -211,8 +208,24 @@ class TodoAddViewController: UIViewController {
 
     }
     
-
+    
     // MARK: - Method & Action
+    
+    func setupInitialData() {
+        if let item = todoItem {
+            selectedColor = item.color
+            updateButtonBorders()
+
+            todoTextField.text = item.content
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            selectedDateLabel.text = dateFormatter.string(from: item.date)
+            selectedDateLabel.textColor = .black
+            selectedDate = item.date
+        }
+    }
+
     
     func getSelectedColor() -> UIColor? {
         return selectedColor
@@ -316,25 +329,26 @@ class TodoAddViewController: UIViewController {
 
 
     @objc func saveButtonTapped() {
-        guard let content = todoTextField.text, !content.isEmpty else {
+        guard let content = todoTextField.text, !content.isEmpty,
+              let index = todoItemIndex else {
             return
         }
 
         let finalSelectedColor = selectedColor ?? .systemYellow
-        let todoItem = TodoItem(color: finalSelectedColor, content: content, date: selectedDate ?? Date())
+        let updatedTodoItem = TodoItem(color: finalSelectedColor, content: content, date: selectedDate ?? Date())
 
-        delegate?.didAddTodoItem(todoItem)
+        delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
 
         dismiss(animated: true, completion: nil)
     }
-    
+
     
 }
 
 
 // MARK: - UITextFieldDelegate
 
-extension TodoAddViewController: UITextFieldDelegate {
+extension TodoEditViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()
