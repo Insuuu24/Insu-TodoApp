@@ -27,8 +27,6 @@ class TodoListViewController: UIViewController {
 
     }
     
-
-    
     // MARK: - Navigation Bar
     
     private func setupNavigationBar() {
@@ -100,6 +98,7 @@ class TodoListViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems.count
     }
@@ -128,29 +127,26 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
-
-        if let trashImage = UIImage(systemName: "trash") {
-            deleteAction.image = trashImage
-        }
+        deleteAction.image = UIImage(systemName: "trash")
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let completeAction = UIContextualAction(style: .normal, title: "완료") { (action, view, completionHandler) in
+        let completeAction = UIContextualAction(style: .normal, title: nil) { (action, view, completionHandler) in
             let completedItem = self.todoItems[indexPath.row]
-            TodoManager.shared.completedItems.append(completedItem) // 완료한 목록에 추가
-            TodoManager.shared.todoItems.remove(at: indexPath.row) // 현재 목록에서 제거
+            TodoManager.shared.completedItems.append(completedItem)
+            TodoManager.shared.todoItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
-        completeAction.backgroundColor = .blue // 예시로 파란색 설정
+        completeAction.image = UIImage(systemName: "text.badge.checkmark")
+        completeAction.backgroundColor = .systemGreen
 
         return UISwipeActionsConfiguration(actions: [completeAction])
     }
 
 
-    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -163,7 +159,13 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension TodoListViewController: TodoAddViewControllerDelegate {
     func didAddTodoItem(_ item: TodoItem) {
-        TodoManager.shared.todoItems.append(item) // 여기에서도 TodoManager를 사용하여 항목 추가
-        listTableView.reloadData()
+        TodoManager.shared.todoItems.append(item)
+    
+        let newIndexPath = IndexPath(row: todoItems.count - 1, section: 0)
+
+        // 셀 추가 + 애니메이셔
+        listTableView.beginUpdates()
+        listTableView.insertRows(at: [newIndexPath], with: .automatic)
+        listTableView.endUpdates()
     }
 }

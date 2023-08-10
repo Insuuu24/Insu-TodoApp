@@ -23,9 +23,9 @@ class TodoAddViewController: UIViewController {
         return label
     }()
     
-    lazy var yellowButton: UIButton = createColorButton(color: .yellow)
-    lazy var greenButton: UIButton = createColorButton(color: .green)
-    lazy var blueButton: UIButton = createColorButton(color: .blue)
+    lazy var yellowButton: UIButton = createColorButton(color: .systemYellow)
+    lazy var greenButton: UIButton = createColorButton(color: .systemGreen)
+    lazy var blueButton: UIButton = createColorButton(color: .systemBlue)
     lazy var pinkButton: UIButton = createColorButton(color: .systemPink)
     lazy var indigoButton: UIButton = createColorButton(color: .systemIndigo)
 
@@ -127,6 +127,8 @@ class TodoAddViewController: UIViewController {
         setupLayout()
 
     }
+    
+    
     
     // MARK: - Navigation Bar
     
@@ -238,13 +240,13 @@ class TodoAddViewController: UIViewController {
             button.layer.borderColor = UIColor.clear.cgColor
         }
         
-        if selectedColor == .yellow {
+        if selectedColor == .systemYellow {
             yellowButton.layer.borderWidth = 3
             yellowButton.layer.borderColor = UIColor.lightGray.cgColor
-        } else if selectedColor == .green {
+        } else if selectedColor == .systemGreen {
             greenButton.layer.borderWidth = 3
             greenButton.layer.borderColor = UIColor.lightGray.cgColor
-        } else if selectedColor == .blue {
+        } else if selectedColor == .systemBlue {
             blueButton.layer.borderWidth = 3
             blueButton.layer.borderColor = UIColor.lightGray.cgColor
         } else if selectedColor == .systemPink {
@@ -258,11 +260,11 @@ class TodoAddViewController: UIViewController {
     
     @objc func colorButtonTapped(sender: UIButton) {
         if sender == yellowButton {
-            selectedColor = .yellow
+            selectedColor = .systemYellow
         } else if sender == greenButton {
-            selectedColor = .green
+            selectedColor = .systemGreen
         } else if sender == blueButton {
-            selectedColor = .blue
+            selectedColor = .systemBlue
         } else if sender == pinkButton {
             selectedColor = .systemPink
         } else if sender == indigoButton {
@@ -305,7 +307,7 @@ class TodoAddViewController: UIViewController {
 
     func updateSaveButtonState() {
         if isFormComplete() {
-            saveButton.backgroundColor = .systemBlue
+            saveButton.backgroundColor = .black
             saveButton.isEnabled = true
         } else {
             saveButton.backgroundColor = .lightGray
@@ -319,20 +321,13 @@ class TodoAddViewController: UIViewController {
             return
         }
 
-        let finalSelectedColor = selectedColor ?? .yellow
+        let finalSelectedColor = selectedColor ?? .systemYellow
         let todoItem = TodoItem(color: finalSelectedColor, content: content, date: selectedDate ?? Date())
 
         delegate?.didAddTodoItem(todoItem)
 
         dismiss(animated: true, completion: nil)
     }
-
-
-
-    
-    
-    
-    
     
     
 }
@@ -340,7 +335,6 @@ class TodoAddViewController: UIViewController {
 
 // MARK: - UITextFieldDelegate
 
-// UITextFieldDelegate 메서드 사용을 위해
 extension TodoAddViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
