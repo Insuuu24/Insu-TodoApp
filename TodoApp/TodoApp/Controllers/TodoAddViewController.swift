@@ -103,7 +103,7 @@ class TodoAddViewController: UIViewController {
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = .systemGray4
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
         button.isEnabled = false
@@ -309,7 +309,7 @@ class TodoAddViewController: UIViewController {
             saveButton.backgroundColor = UIColor(red: 0.51, green: 0.57, blue: 0.63, alpha: 1.00)
             saveButton.isEnabled = true
         } else {
-            saveButton.backgroundColor = .lightGray
+            saveButton.backgroundColor = .systemGray4
             saveButton.isEnabled = false
         }
     }

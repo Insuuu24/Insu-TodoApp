@@ -354,4 +354,12 @@ extension TodoEditViewController: UITextFieldDelegate {
         updateSaveButtonState()
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        DispatchQueue.main.async {
+            self.updateSaveButtonState()
+        }
+        return true
+    }
+
+    
 }

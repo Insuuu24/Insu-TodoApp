@@ -81,8 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				EBABFB532A7F73ED00BAB00E /* LaunchScreen.storyboard */,
-				EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */,
-				EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */,
+				EBD01CE12A85F43F00ADDAE1 /* Helpers */,
 				EBABFB5C2A7F8B3E00BAB00E /* Models */,
 				EBABFB5D2A7F8B4600BAB00E /* Views */,
 				EBABFB5E2A7F8B4A00BAB00E /* Controllers */,
@@ -121,6 +120,15 @@
 				EBABFB612A7F8D0600BAB00E /* TodoCompleteViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EBD01CE12A85F43F00ADDAE1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */,
+				EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
