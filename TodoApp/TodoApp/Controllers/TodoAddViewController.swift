@@ -147,15 +147,8 @@ class TodoAddViewController: UIViewController {
     
     private func setupLayout() {
         
-        view.addSubview(colorPickerHeader)
-        view.addSubview(colorsStackView)
-        view.addSubview(todoHeader)
-        view.addSubview(todoTextField)
-        view.addSubview(dateHeader)
-        view.addSubview(borderView)
+        view.addSubviews(colorPickerHeader, colorsStackView, todoHeader, todoTextField, dateHeader, borderView, saveButton)
         borderView.addSubview(stackView)
-        view.addSubview(saveButton)
-        
         
         colorPickerHeader.translatesAutoresizingMaskIntoConstraints = false
         colorsStackView.translatesAutoresizingMaskIntoConstraints = false
