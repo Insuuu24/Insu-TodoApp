@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class TodoCompleteViewController: UIViewController {
@@ -12,7 +10,6 @@ class TodoCompleteViewController: UIViewController {
         return tableView
     }()
     
-    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -22,11 +19,9 @@ class TodoCompleteViewController: UIViewController {
         setupTableView()
     }
     
-
     // MARK: - Navigation Bar
     
     private func setupNavigationBar() {
-        
         navigationItem.title = "완료한 Todo"
         
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -61,7 +56,6 @@ class TodoCompleteViewController: UIViewController {
         ])
     }
 }
-
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 

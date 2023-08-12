@@ -105,6 +105,7 @@
 		EBABFB5D2A7F8B4600BAB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EBABFB4E2A7F73EC00BAB00E /* Main.storyboard */,
 				EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */,
 				EB76EAC12A8086A500D57868 /* TodoAddViews */,
 			);
@@ -114,7 +115,6 @@
 		EBABFB5E2A7F8B4A00BAB00E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EBABFB4E2A7F73EC00BAB00E /* Main.storyboard */,
 				EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */,
 				EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */,
 				EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */,

@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class TodoListCell: UITableViewCell {
@@ -71,7 +69,6 @@ class TodoListCell: UITableViewCell {
         stackView.addArrangedSubview(dateLabel)
 
         NSLayoutConstraint.activate([
-            
             colorView.centerYAnchor.constraint(equalTo: todoLabel.centerYAnchor),
             colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             colorView.widthAnchor.constraint(equalToConstant: 10),
@@ -98,9 +95,6 @@ class TodoListCell: UITableViewCell {
         todoLabel.attributedText = attributedString
     }
 
-    
-    
-    
     // MARK: - configure
     
     func configure(with item: TodoItem) {
@@ -111,7 +105,4 @@ class TodoListCell: UITableViewCell {
         formatter.dateFormat = "yyyy-MM-dd"
         self.dateLabel.text = formatter.string(from: item.date)
     }
-
-
 }
-

@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class HomeViewController: UIViewController {
@@ -10,16 +8,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var startButton: UIButton!
     
-    
-    
-    
     // MARK: - View Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -30,11 +20,9 @@ class HomeViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    
     // MARK: - Method & Action
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        
         let todoListAction = UIAction(title: "Todo List", image: UIImage(systemName: "list.bullet"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
             let todoListVC = TodoListViewController()
@@ -52,12 +40,3 @@ class HomeViewController: UIViewController {
         sender.showsMenuAsPrimaryAction = true}
     
 }
-    
-    
-    
-    
-    
-    
-
-
-

@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 protocol TodoAddViewControllerDelegate: AnyObject {
@@ -7,7 +5,7 @@ protocol TodoAddViewControllerDelegate: AnyObject {
 }
 
 class TodoAddViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     weak var delegate: TodoAddViewControllerDelegate?
@@ -15,21 +13,20 @@ class TodoAddViewController: UIViewController {
     private var selectedColor: UIColor?
     private var selectedDate: Date?
 
-    
-    let colorPickerHeader: UILabel = {
+    private let colorPickerHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = "Color"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
-    lazy var yellowButton: UIButton = createColorButton(color: .systemYellow)
-    lazy var greenButton: UIButton = createColorButton(color: .systemGreen)
-    lazy var blueButton: UIButton = createColorButton(color: .systemBlue)
-    lazy var pinkButton: UIButton = createColorButton(color: .systemPink)
-    lazy var indigoButton: UIButton = createColorButton(color: .systemIndigo)
+    private lazy var yellowButton: UIButton = createColorButton(color: .systemYellow)
+    private lazy var greenButton: UIButton = createColorButton(color: .systemGreen)
+    private lazy var blueButton: UIButton = createColorButton(color: .systemBlue)
+    private lazy var pinkButton: UIButton = createColorButton(color: .systemPink)
+    private lazy var indigoButton: UIButton = createColorButton(color: .systemIndigo)
 
-    lazy var colorsStackView: UIStackView = {
+    private lazy var colorsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [yellowButton, greenButton, blueButton, pinkButton, indigoButton])
         stackView.axis = .horizontal
         stackView.spacing = 20
@@ -38,14 +35,14 @@ class TodoAddViewController: UIViewController {
         return stackView
     }()
     
-    let todoHeader: UILabel = {
+    private let todoHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = "Todo"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
-    let todoTextField: UITextField = {
+    private let todoTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.layer.borderWidth = 0.5
@@ -54,7 +51,7 @@ class TodoAddViewController: UIViewController {
         return textField
     }()
 
-    lazy var borderView: UIView = {
+    private lazy var borderView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.lightGray.cgColor
@@ -62,14 +59,14 @@ class TodoAddViewController: UIViewController {
         return view
     }()
     
-    let dateHeader: UILabel = {
+    private let dateHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = "Date"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
-    let selectedDateLabel: UILabel = {
+    private let selectedDateLabel: UILabel = {
         let label = UILabel()
         label.text = "선택한 날짜 없음"
         label.font = UIFont.systemFont(ofSize: 14)
@@ -77,7 +74,7 @@ class TodoAddViewController: UIViewController {
         return label
     }()
     
-    lazy var calendarButton: UIButton = {
+    private lazy var calendarButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "calendar"), for: .normal)
         button.tintColor = .separator
@@ -85,13 +82,13 @@ class TodoAddViewController: UIViewController {
         return button
     }()
     
-    let datePicker: UIDatePicker = {
+    private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
         return picker
     }()
     
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [selectedDateLabel, calendarButton])
         stack.axis = .horizontal
         stack.alignment = .center
@@ -100,7 +97,7 @@ class TodoAddViewController: UIViewController {
         return stack
     }()
     
-    lazy var saveButton: UIButton = {
+    private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장", for: .normal)
         button.backgroundColor = .systemGray4
@@ -110,8 +107,6 @@ class TodoAddViewController: UIViewController {
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
-
-
     
     // MARK: - View Life Cycle
     
@@ -128,8 +123,6 @@ class TodoAddViewController: UIViewController {
 
     }
     
-    
-    
     // MARK: - Navigation Bar
     
     private func setupNavigationBar() {
@@ -138,50 +131,44 @@ class TodoAddViewController: UIViewController {
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
-    
-    
-    
-    
+
     // MARK: - Setup Layout
     
     private func setupLayout() {
-        
-        view.addSubviews(colorPickerHeader, colorsStackView, todoHeader, todoTextField, dateHeader, borderView, saveButton)
+        view.addSubviews(colorPickerHeaderLabel, colorsStackView, todoHeaderLabel, todoTextField, dateHeaderLabel, borderView, saveButton)
         borderView.addSubview(stackView)
         
-        colorPickerHeader.translatesAutoresizingMaskIntoConstraints = false
+        colorPickerHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         colorsStackView.translatesAutoresizingMaskIntoConstraints = false
-        todoHeader.translatesAutoresizingMaskIntoConstraints = false
+        todoHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         todoTextField.translatesAutoresizingMaskIntoConstraints = false
-        dateHeader.translatesAutoresizingMaskIntoConstraints = false
+        dateHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         borderView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         selectedDateLabel.translatesAutoresizingMaskIntoConstraints = false
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         
-        
         NSLayoutConstraint.activate([
-            colorPickerHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            colorPickerHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            colorPickerHeaderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            colorPickerHeaderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
-            colorsStackView.topAnchor.constraint(equalTo: colorPickerHeader.bottomAnchor, constant: 10),
+            colorsStackView.topAnchor.constraint(equalTo: colorPickerHeaderLabel.bottomAnchor, constant: 10),
             colorsStackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 16),
             colorsStackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -16),
             colorsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            todoHeader.topAnchor.constraint(equalTo: colorsStackView.bottomAnchor, constant: 20),
-            todoHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            todoHeaderLabel.topAnchor.constraint(equalTo: colorsStackView.bottomAnchor, constant: 20),
+            todoHeaderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             
-            todoTextField.topAnchor.constraint(equalTo: todoHeader.bottomAnchor, constant: 10),
+            todoTextField.topAnchor.constraint(equalTo: todoHeaderLabel.bottomAnchor, constant: 10),
             todoTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             todoTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             todoTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            dateHeader.topAnchor.constraint(equalTo: todoTextField.bottomAnchor, constant: 20),
-            dateHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            dateHeaderLabel.topAnchor.constraint(equalTo: todoTextField.bottomAnchor, constant: 20),
+            dateHeaderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-            borderView.topAnchor.constraint(equalTo: dateHeader.bottomAnchor, constant: 10),
+            borderView.topAnchor.constraint(equalTo: dateHeaderLabel.bottomAnchor, constant: 10),
             borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             borderView.heightAnchor.constraint(equalToConstant: 40),
@@ -200,11 +187,8 @@ class TodoAddViewController: UIViewController {
             saveButton.heightAnchor.constraint(equalToConstant: 50)
             
         ])
-        
-
     }
     
-
     // MARK: - Method & Action
     
     func getSelectedColor() -> UIColor? {
@@ -226,7 +210,6 @@ class TodoAddViewController: UIViewController {
     }
     
     private func updateButtonBorders() {
-        
         for button in [yellowButton, greenButton, blueButton, pinkButton, indigoButton] {
             button.layer.borderWidth = 0
             button.layer.borderColor = UIColor.clear.cgColor
@@ -250,7 +233,7 @@ class TodoAddViewController: UIViewController {
         }
     }
     
-    @objc func colorButtonTapped(sender: UIButton) {
+    @objc private func colorButtonTapped(sender: UIButton) {
         if sender == yellowButton {
             selectedColor = .systemYellow
         } else if sender == greenButton {
@@ -267,12 +250,11 @@ class TodoAddViewController: UIViewController {
         updateSaveButtonState()
     }
 
-
-    @objc func handleCalendarButton() {
+    @objc private func handleCalendarButton() {
         didTapCalendarButton()
     }
 
-    func didTapCalendarButton() {
+    private func didTapCalendarButton() {
         let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
         datePickerPopup.onSelectDate = { [weak self] selectedDate in
             guard let self = self else { return }
@@ -283,7 +265,6 @@ class TodoAddViewController: UIViewController {
             
             self.selectedDate = selectedDate
         }
-
         datePickerPopup.alpha = 0
         self.view.addSubview(datePickerPopup)
 
@@ -293,11 +274,11 @@ class TodoAddViewController: UIViewController {
         updateSaveButtonState()
     }
     
-    func isFormComplete() -> Bool {
+    private func isFormComplete() -> Bool {
         return selectedColor != nil && !(todoTextField.text?.isEmpty ?? true)
     }
 
-    func updateSaveButtonState() {
+    private func updateSaveButtonState() {
         if isFormComplete() {
             saveButton.backgroundColor = UIColor(red: 0.51, green: 0.57, blue: 0.63, alpha: 1.00)
             saveButton.isEnabled = true
@@ -308,7 +289,7 @@ class TodoAddViewController: UIViewController {
     }
 
 
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         guard let content = todoTextField.text, !content.isEmpty else {
             return
         }
@@ -320,17 +301,13 @@ class TodoAddViewController: UIViewController {
 
         dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
 
 // MARK: - UITextFieldDelegate
 
 extension TodoAddViewController: UITextFieldDelegate {
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateSaveButtonState()
     }
-    
 }

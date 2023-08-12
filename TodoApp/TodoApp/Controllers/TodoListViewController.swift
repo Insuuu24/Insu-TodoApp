@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class TodoListViewController: UIViewController {
@@ -17,7 +15,6 @@ class TodoListViewController: UIViewController {
         return tableView
     }()
     
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -28,15 +25,13 @@ class TodoListViewController: UIViewController {
 
     }
     
-    
     // MARK: - Navigation Bar
     
     private func setupNavigationBar() {
-        
         navigationItem.title = "Todo List"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        
+    
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = .white
@@ -49,7 +44,6 @@ class TodoListViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-
     @objc private func addButtonTapped() {
         let addTodoVC = TodoAddViewController()
         addTodoVC.delegate = self
@@ -86,15 +80,11 @@ class TodoListViewController: UIViewController {
             listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-
-
 }
-
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems.count
     }
@@ -142,7 +132,6 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [completeAction])
     }
 
-
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -169,7 +158,6 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
-
 // MARK: - TodoAddViewControllerDelegate
 
 extension TodoListViewController: TodoAddViewControllerDelegate {
@@ -184,7 +172,6 @@ extension TodoListViewController: TodoAddViewControllerDelegate {
         listTableView.endUpdates()
     }
 }
-
 
 // MARK: - TodoEditViewControllerDelegate
 
