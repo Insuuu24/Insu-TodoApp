@@ -1,4 +1,6 @@
 import UIKit
+import Then
+import SnapKit
 
 class TodoCompleteViewController: UIViewController {
     
@@ -15,19 +17,20 @@ class TodoCompleteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNavigationBar()
-        setupTableView()
+        configureNav()
+        configureUI()
     }
     
     // MARK: - Navigation Bar
     
-    private func setupNavigationBar() {
+    private func configureNav() {
         navigationItem.title = "완료한 Todo"
         
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.configureWithOpaqueBackground()
-        navigationBarAppearance.backgroundColor = .white
-
+        let navigationBarAppearance = UINavigationBarAppearance().then {
+            $0.configureWithOpaqueBackground()
+            $0.backgroundColor = .white
+        }
+        
         navigationController?.navigationBar.topItem?.title = ""
         navigationController?.setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.tintColor = .black
@@ -38,7 +41,7 @@ class TodoCompleteViewController: UIViewController {
     
     // MARK: - Setup Layout
     
-    private func setupTableView() {
+    private func configureUI() {
         view.addSubview(completeListTableView)
         
         completeListTableView.delegate = self
@@ -69,8 +72,6 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
         let item = TodoManager.shared.completedItems[indexPath.row]
         
         cell.configure(with: item)
-        
-        // Todo 레이블 취소선
         cell.applyStrikeThrough()
         
         return cell

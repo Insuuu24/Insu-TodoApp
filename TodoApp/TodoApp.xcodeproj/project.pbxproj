@@ -16,7 +16,6 @@
 		EBABFB492A7F73EC00BAB00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */; };
 		EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */; };
 		EBABFB4D2A7F73EC00BAB00E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */; };
-		EBABFB502A7F73EC00BAB00E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBABFB4E2A7F73EC00BAB00E /* Main.storyboard */; };
 		EBABFB522A7F73ED00BAB00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBABFB512A7F73ED00BAB00E /* Assets.xcassets */; };
 		EBABFB552A7F73ED00BAB00E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBABFB532A7F73ED00BAB00E /* LaunchScreen.storyboard */; };
 		EBABFB602A7F8CED00BAB00E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */; };
@@ -38,7 +37,6 @@
 		EBABFB482A7F73EC00BAB00E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBABFB4A2A7F73EC00BAB00E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		EBABFB4F2A7F73EC00BAB00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EBABFB512A7F73ED00BAB00E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBABFB542A7F73ED00BAB00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBABFB562A7F73ED00BAB00E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 				1342C207BE5220C8E23BE6F9 /* Pods-TodoApp.debug.xcconfig */,
 				8BEFFE8215F17329EE99B3D5 /* Pods-TodoApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -130,7 +127,6 @@
 		EBABFB5D2A7F8B4600BAB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EBABFB4E2A7F73EC00BAB00E /* Main.storyboard */,
 				EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */,
 				EB76EAC12A8086A500D57868 /* TodoAddViews */,
 			);
@@ -221,7 +217,6 @@
 			files = (
 				EBABFB552A7F73ED00BAB00E /* LaunchScreen.storyboard in Resources */,
 				EBABFB522A7F73ED00BAB00E /* Assets.xcassets in Resources */,
-				EBABFB502A7F73EC00BAB00E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,14 +287,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EBABFB4E2A7F73EC00BAB00E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EBABFB4F2A7F73EC00BAB00E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EBABFB532A7F73ED00BAB00E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -437,7 +424,6 @@
 				INFOPLIST_FILE = TodoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -468,7 +454,6 @@
 				INFOPLIST_FILE = TodoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -1,4 +1,6 @@
 import UIKit
+import Then
+import SnapKit
 
 protocol TodoEditViewControllerDelegate: AnyObject {
     func didUpdateTodoItem(_ item: TodoItem, at index: Int)
@@ -121,14 +123,14 @@ class TodoEditViewController: UIViewController {
         
         todoTextField.delegate = self
         
-        setupNavigationBar()
-        setupLayout()
+        configureNav()
+        configureUI()
         setupInitialData()
     }
     
     // MARK: - Navigation Bar
     
-    private func setupNavigationBar() {
+    private func configureNav() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
         self.navigationController?.navigationBar.standardAppearance = appearance
@@ -137,7 +139,7 @@ class TodoEditViewController: UIViewController {
     
     // MARK: - Setup Layout
     
-    private func setupLayout() {
+    private func configureUI() {
         view.addSubviews(colorPickerHeaderLabel, colorsStackView, todoHeaderLabel, todoTextField, dateHeaderLabel, borderView, saveButton)
         borderView.addSubview(stackView)
         

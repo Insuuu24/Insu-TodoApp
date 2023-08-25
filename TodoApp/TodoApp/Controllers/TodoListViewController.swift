@@ -1,4 +1,6 @@
 import UIKit
+import Then
+import SnapKit
 
 class TodoListViewController: UIViewController {
     
@@ -20,14 +22,14 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNavigationBar()
-        setupTableView()
+        configureNav()
+        configureUI()
 
     }
     
     // MARK: - Navigation Bar
     
-    private func setupNavigationBar() {
+    private func configureNav() {
         navigationItem.title = "Todo List"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -63,7 +65,7 @@ class TodoListViewController: UIViewController {
     
     // MARK: - Setup Layout
     
-    private func setupTableView() {
+    private func configureUI() {
         view.addSubview(listTableView)
         
         listTableView.delegate = self

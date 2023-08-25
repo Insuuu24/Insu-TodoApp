@@ -61,12 +61,8 @@ class TodoListCell: UITableViewCell {
     // MARK: - Setup Layout
     
     private func setupLayout() {
-        contentView.addSubview(stackView)
-        contentView.addSubview(colorView)
-        contentView.addSubview(buttonImageView)
-        
-        stackView.addArrangedSubview(todoLabel)
-        stackView.addArrangedSubview(dateLabel)
+        contentView.addSubviews(stackView, colorView, buttonImageView)
+        stackView.addArrangedSubviews(todoLabel, dateLabel)
 
         NSLayoutConstraint.activate([
             colorView.centerYAnchor.constraint(equalTo: todoLabel.centerYAnchor),
