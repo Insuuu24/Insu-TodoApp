@@ -1,51 +1,42 @@
 import UIKit
+import Then
+import SnapKit
 
 class TodoListCell: UITableViewCell {
     
     // MARK: - Properties
     
-    let colorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 5
-        return view
-    }()
+    private let categoryBadge = UILabel().then {
+        $0.font = .systemFont(ofSize: 12)
+        $0.textAlignment = .center
+        $0.backgroundColor = .systemBlue
+        $0.textColor = .white
+        $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
+    }
     
-    lazy var todoLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.lineBreakStrategy = .hangulWordPriority
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        return label
-    }()
+    private let todoLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 16)
+        $0.numberOfLines = 0
+        $0.lineBreakStrategy = .hangulWordPriority
+    }
     
-    private lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .lightGray
-        return label
-    }()
+    private let dateLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 12)
+        $0.textColor = .lightGray
+    }
     
-    private lazy var stackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 15
-        stack.distribution = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private let stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 15
+        $0.distribution = .fill
+    }
     
-    private lazy var buttonImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .black
-        return imageView
-    }()
+    private let buttonImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "chevron.right")
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = .black
+    }
     
     // MARK: - Initialization
     
@@ -61,25 +52,28 @@ class TodoListCell: UITableViewCell {
     // MARK: - Setup Layout
     
     private func setupLayout() {
-        contentView.addSubviews(stackView, colorView, buttonImageView)
+        contentView.addSubviews(stackView, categoryBadge, buttonImageView)
         stackView.addArrangedSubviews(todoLabel, dateLabel)
-
-        NSLayoutConstraint.activate([
-            colorView.centerYAnchor.constraint(equalTo: todoLabel.centerYAnchor),
-            colorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            colorView.widthAnchor.constraint(equalToConstant: 10),
-            colorView.heightAnchor.constraint(equalToConstant: 10),
-
-            stackView.leadingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: buttonImageView.leadingAnchor, constant: -10),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-
-            buttonImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            buttonImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            buttonImageView.widthAnchor.constraint(equalToConstant: 20),
-            buttonImageView.heightAnchor.constraint(equalToConstant: 20)
-        ])
+        
+        categoryBadge.snp.makeConstraints {
+            $0.top.equalTo(contentView).offset(15)
+            $0.trailing.equalTo(contentView).offset(-15)
+            $0.width.greaterThanOrEqualTo(30)
+            $0.height.equalTo(20)
+        }
+        
+        stackView.snp.makeConstraints {
+            $0.leading.equalTo(contentView).offset(15)
+            $0.trailing.equalTo(categoryBadge.snp.leading).offset(-10)
+            $0.top.equalTo(contentView).offset(20)
+            $0.bottom.equalTo(contentView).offset(-20)
+        }
+        
+        buttonImageView.snp.makeConstraints {
+            $0.centerY.equalTo(contentView)
+            $0.trailing.equalTo(contentView).offset(-20)
+            $0.width.height.equalTo(20)
+        }
     }
     
     // MARK: - Method & Action
@@ -91,10 +85,10 @@ class TodoListCell: UITableViewCell {
         todoLabel.attributedText = attributedString
     }
 
-    // MARK: - configure
+    // MARK: - Configure
     
     func configure(with item: TodoItem) {
-        self.colorView.backgroundColor = item.color
+        self.categoryBadge.text = item.category
         self.todoLabel.text = item.content
         
         let formatter = DateFormatter()

@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.75, green: 0.76, blue: 0.78, alpha: 1.00)
         configureUI()
-        loadImage(from: "https://spartacodingclub.kr/css/images/scc-og.jpg")
+        loadImage(from: "https://avatars.githubusercontent.com/u/117909631?v=4&h=150&w=150")
     }
         
     override func viewWillAppear(_ animated: Bool) {

@@ -64,12 +64,12 @@ class TodoCompleteViewController: UIViewController {
 
 extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TodoManager.shared.completedItems.count
+        return TodoDataManager.shared.completedItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedTodoCell", for: indexPath) as! TodoListCell
-        let item = TodoManager.shared.completedItems[indexPath.row]
+        let item = TodoDataManager.shared.completedItems[indexPath.row]
         
         cell.configure(with: item)
         cell.applyStrikeThrough()
@@ -79,7 +79,7 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
-            TodoManager.shared.completedItems.remove(at: indexPath.row)
+            TodoDataManager.shared.completedItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
