@@ -16,13 +16,13 @@ class TodoListCell: UITableViewCell {
     }
     
     private let todoLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16)
+        $0.font = .systemFont(ofSize: 14)
         $0.numberOfLines = 0
         $0.lineBreakStrategy = .hangulWordPriority
     }
     
     private let dateLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 12)
+        $0.font = .systemFont(ofSize: 10)
         $0.textColor = .lightGray
     }
     
@@ -56,7 +56,7 @@ class TodoListCell: UITableViewCell {
         stackView.addArrangedSubviews(todoLabel, dateLabel)
         
         categoryBadge.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(15)
+            $0.top.equalTo(contentView).offset(10)
             $0.trailing.equalTo(contentView).offset(-50)
             $0.width.equalTo(70)
             $0.height.equalTo(22)
@@ -65,8 +65,8 @@ class TodoListCell: UITableViewCell {
         stackView.snp.makeConstraints {
             $0.leading.equalTo(contentView).offset(15)
             $0.trailing.equalTo(categoryBadge.snp.leading).offset(-10)
-            $0.top.equalTo(contentView).offset(20)
-            $0.bottom.equalTo(contentView).offset(-20)
+            $0.top.equalTo(contentView).offset(10)
+            $0.bottom.equalTo(contentView).offset(-10)
         }
         
         buttonImageView.snp.makeConstraints {
