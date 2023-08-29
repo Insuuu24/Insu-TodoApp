@@ -165,7 +165,7 @@ class TodoListViewController: UIViewController {
 
         categoryLabels.forEach { categoryStackView.addArrangedSubview($0) }
 
-        barColor.backgroundColor = UIColor(red: 0.75, green: 0.76, blue: 0.78, alpha: 1.00)
+        barColor.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
         categoryScrollView.addSubview(barColor)
         barColor.snp.makeConstraints {
             $0.bottom.equalTo(categoryScrollView.snp.bottom)
@@ -175,15 +175,12 @@ class TodoListViewController: UIViewController {
         }
     }
 
-
-
     // MARK: - Actions
     
     @objc private func categoryTapped(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         guard label.text != nil else { return }
 
-        // 모든 레이블의 색상을 원래대로 되돌리기
         for view in categoryStackView.arrangedSubviews {
             if let label = view as? UILabel {
                 label.textColor = .lightGray
@@ -192,7 +189,6 @@ class TodoListViewController: UIViewController {
 
         label.textColor = .black
 
-        // barColor 이동 애니메이션
         barColor.snp.remakeConstraints {
             $0.bottom.equalTo(categoryScrollView.snp.bottom)
             $0.height.equalTo(3)
@@ -204,8 +200,7 @@ class TodoListViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
 
-        // 여기에 카테고리 필터링 코드를 추가하세요.
-        // 예: if category == "전체" { ... }
+        // 여기에 카테고리 필터링 로직 구현 예정
     }
 
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -257,10 +252,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // 데이터 배열에서 항목을 삭제
             todoItems.remove(at: indexPath.row)
-            
-            // 테이블 뷰에서 해당 셀을 삭제
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }

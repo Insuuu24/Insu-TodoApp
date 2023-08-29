@@ -9,9 +9,9 @@ class TodoListCell: UITableViewCell {
     private let categoryBadge = UILabel().then {
         $0.font = .systemFont(ofSize: 12)
         $0.textAlignment = .center
-        $0.backgroundColor = .systemBlue
+        $0.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
         $0.textColor = .white
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 11
         $0.clipsToBounds = true
     }
     
@@ -49,17 +49,17 @@ class TodoListCell: UITableViewCell {
         fatalError("")
     }
     
-    // MARK: - Setup Layout
-    
+    // MARK: - Helpers
+
     private func setupLayout() {
         contentView.addSubviews(stackView, categoryBadge, buttonImageView)
         stackView.addArrangedSubviews(todoLabel, dateLabel)
         
         categoryBadge.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(15)
-            $0.trailing.equalTo(contentView).offset(-15)
-            $0.width.greaterThanOrEqualTo(30)
-            $0.height.equalTo(20)
+            $0.trailing.equalTo(contentView).offset(-50)
+            $0.width.equalTo(70)
+            $0.height.equalTo(22)
         }
         
         stackView.snp.makeConstraints {
@@ -75,8 +75,6 @@ class TodoListCell: UITableViewCell {
             $0.width.height.equalTo(20)
         }
     }
-    
-    // MARK: - Method & Action
     
     func applyStrikeThrough() {
         guard let currentText = todoLabel.text else { return }

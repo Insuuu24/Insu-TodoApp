@@ -109,9 +109,9 @@ class TodoAddViewController: UIViewController {
         for (index, category) in categories.enumerated() {
             let button = UIButton(type: .system)
             button.setTitle(category, for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 12) // 텍스트 크기를 12로 설정
-            button.setTitleColor(.black, for: .normal) // 텍스트 색상을 검은색으로 설정
-            button.backgroundColor = .white // 배경색을 흰색으로 설정
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = .white
             button.layer.cornerRadius = 15
             button.layer.borderWidth = 1
             button.layer.borderColor = UIColor.lightGray.cgColor
