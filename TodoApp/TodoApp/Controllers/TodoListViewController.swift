@@ -309,13 +309,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             TodoDataManager.shared.saveTodoItems()
 
             self.getItemsForCategory("전체")
-
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            let category = self.todayCategories[indexPath.section]
-            if self.sections[category]?.isEmpty ?? true {
-                self.sections.removeValue(forKey: category)
-                tableView.deleteSections([indexPath.section], with: .automatic)
-            }
+            tableView.reloadData()
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
@@ -346,7 +340,9 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         editVC.delegate = self
         let selectedItem = todoItems[indexPath.row]
         let selectedIndex = indexPath.row
-        
+        editVC.selectedTodoItem = selectedItem
+        editVC.selectedIndex = selectedIndex
+
         let navigationController = UINavigationController(rootViewController: editVC)
         navigationController.modalPresentationStyle = .pageSheet
         let sheet = navigationController.presentationController as? UISheetPresentationController

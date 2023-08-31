@@ -12,6 +12,7 @@
 		EB3A97E62AA0DC1E009821F5 /* insu-memoji (1).png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E52AA0DC1E009821F5 /* insu-memoji (1).png */; };
 		EB3A97E82AA0DD46009821F5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E72AA0DD46009821F5 /* logo.png */; };
 		EB3A97EA2AA0DF50009821F5 /* completed-Todo.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E92AA0DF50009821F5 /* completed-Todo.png */; };
+		EB3A97EE2AA100B3009821F5 /* clickMe.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97ED2AA100B3009821F5 /* clickMe.png */; };
 		EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */; };
 		EB3C49FF2A81D5F400F4B291 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3C49FE2A81D5F400F4B291 /* TodoItem.swift */; };
 		EB726E732A86771200FA7A1F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB726E722A86771200FA7A1F /* Extensions.swift */; };
@@ -35,6 +36,7 @@
 		EB3A97E52AA0DC1E009821F5 /* insu-memoji (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "insu-memoji (1).png"; sourceTree = "<group>"; };
 		EB3A97E72AA0DD46009821F5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		EB3A97E92AA0DF50009821F5 /* completed-Todo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "completed-Todo.png"; sourceTree = "<group>"; };
+		EB3A97ED2AA100B3009821F5 /* clickMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clickMe.png; sourceTree = "<group>"; };
 		EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
 		EB3C49FE2A81D5F400F4B291 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		EB726E722A86771200FA7A1F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				EB3A97E52AA0DC1E009821F5 /* insu-memoji (1).png */,
 				EB3A97E72AA0DD46009821F5 /* logo.png */,
 				EB3A97E92AA0DF50009821F5 /* completed-Todo.png */,
+				EB3A97ED2AA100B3009821F5 /* clickMe.png */,
 			);
 			name = Img;
 			path = ../Img;
@@ -235,6 +238,7 @@
 			files = (
 				EB3A97E82AA0DD46009821F5 /* logo.png in Resources */,
 				EB3A97E62AA0DC1E009821F5 /* insu-memoji (1).png in Resources */,
+				EB3A97EE2AA100B3009821F5 /* clickMe.png in Resources */,
 				EBABFB552A7F73ED00BAB00E /* LaunchScreen.storyboard in Resources */,
 				EB3A97EA2AA0DF50009821F5 /* completed-Todo.png in Resources */,
 				EBABFB522A7F73ED00BAB00E /* Assets.xcassets in Resources */,

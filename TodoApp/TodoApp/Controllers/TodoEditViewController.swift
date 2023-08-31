@@ -86,11 +86,13 @@ class TodoEditViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
         todoTextField.delegate = self
+        
         configureCategoryButtons()
         configureNav()
         configureUI()
+        populateUIWithSelectedTodoItem()
+        
     }
     
     // MARK: - Helpers
@@ -107,6 +109,35 @@ class TodoEditViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
+    
+    private func populateUIWithSelectedTodoItem() {
+        if let selectedTodoItem = selectedTodoItem {
+            // Set todoTextField text
+            todoTextField.text = selectedTodoItem.content
+            
+            // Set selectedDate and update selectedDateLabel
+            selectedDate = selectedTodoItem.date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            selectedDateLabel.text = dateFormatter.string(from: selectedTodoItem.date)
+            selectedDateLabel.textColor = .black
+            
+            // Set selectedCategory and update categoryButton
+            selectedCategory = selectedTodoItem.category
+            if let index = categories.firstIndex(of: selectedTodoItem.category) {
+                categoryButtons.forEach { button in
+                    button.backgroundColor = .white
+                    button.setTitleColor(.black, for: .normal)
+                }
+                let selectedButton = categoryButtons[index]
+                selectedButton.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
+                selectedButton.setTitleColor(.white, for: .normal)
+            }
+        }
+        
+        updateSaveButtonState()
+    }
+    
     
     private func configureCategoryButtons() {
         for (index, category) in categories.enumerated() {
@@ -212,7 +243,7 @@ class TodoEditViewController: UIViewController {
     }
     
     // MARK: - Actions
-
+    
     @objc private func categoryButtonTapped(_ sender: UIButton) {
         categoryButtons.forEach { button in
             button.backgroundColor = .white
@@ -221,24 +252,23 @@ class TodoEditViewController: UIViewController {
         sender.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
         sender.setTitleColor(.white, for: .normal)
         selectedCategory = categories[sender.tag]
-        updateSaveButtonTapped()
+        updateSaveButtonState()
     }
     
     @objc private func calendarButtonTapped() {
         didTapCalendarButton()
     }
-
+    
     @objc private func updateSaveButtonTapped() {
-        guard let content = todoTextField.text, !content.isEmpty,
-              let category = selectedCategory,
+        guard let content = todoTextField.text,
               let date = selectedDate,
-              let index = selectedIndex else {
-            return
-        }
+              let category = selectedCategory,
+              let index = selectedIndex
+        else { return }
 
-        let todoItem = TodoItem(content: content, category: category, date: date)
-        delegate?.didUpdateTodoItem(todoItem, at: index)
-        dismiss(animated: true, completion: nil)
+        let updatedTodoItem = TodoItem(content: content, category: category, date: date)
+        delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 

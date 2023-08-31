@@ -6,6 +6,11 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
 
+    private let introLabelImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+        $0.image = UIImage(named: "clickMe")
+    }
+    
     private let homeImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 150
@@ -14,11 +19,8 @@ class HomeViewController: UIViewController {
     }
     
     private lazy var listButton = UIButton().then {
-        $0.backgroundColor = .systemGray5
-        $0.setTitle("List", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        $0.layer.cornerRadius = 10
+        $0.backgroundColor = UIColor.clear
+        $0.layer.cornerRadius = 100
         $0.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
     }
     
@@ -44,19 +46,25 @@ class HomeViewController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
-        view.addSubviews(homeImageView, listButton)
+        view.addSubviews(introLabelImageView, homeImageView, listButton)
+        
+        introLabelImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(homeImageView.snp.top).offset(-40)
+            $0.width.equalTo(200)
+            $0.height.equalTo(100)
+        }
         
         homeImageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaInsets).offset(200)
+            $0.bottom.equalTo(view.safeAreaInsets).inset(250)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(300)
         }
         
         listButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaInsets).inset(250)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(homeImageView.snp.bottom).offset(200)
-            $0.width.equalTo(300)
-            $0.height.equalTo(65)
+            $0.width.height.equalTo(200)
         }
     }
     
