@@ -16,6 +16,7 @@ class HomeViewController: UIViewController {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 125
         $0.clipsToBounds = true
+        $0.image = UIImage(named: "placeholder")
     }
     
     private lazy var listButton = UIButton().then {

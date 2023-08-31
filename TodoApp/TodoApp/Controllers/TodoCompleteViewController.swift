@@ -6,11 +6,10 @@ class TodoCompleteViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let completeListTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
+    private let completeListTableView = UITableView(frame: .zero, style: .insetGrouped).then {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.register(TodoListCell.self, forCellReuseIdentifier: "CompletedTodoCell")
+    }
     
     // MARK: - View Life Cycle
 
@@ -46,7 +45,6 @@ class TodoCompleteViewController: UIViewController {
         
         completeListTableView.delegate = self
         completeListTableView.dataSource = self
-        completeListTableView.register(TodoListCell.self, forCellReuseIdentifier: "CompletedTodoCell")
 
         completeListTableView.estimatedRowHeight = 50.0
         completeListTableView.rowHeight = UITableView.automaticDimension

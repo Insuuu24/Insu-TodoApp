@@ -13,7 +13,7 @@ class TodoListViewController: UIViewController {
     
     var displayedItems: [TodoItem] = []
     var sections: [String: [TodoItem]] = [:]
-    let todayCategories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
+    var todayCategories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
     private let barColor = UIView()
 
     private let listTableView = UITableView(frame: .zero, style: .insetGrouped).then {
@@ -54,18 +54,14 @@ class TodoListViewController: UIViewController {
         configureNav()
         configureUI()
         updateCategories(todayCategories)
+        getItemsForCategory("전체")
         displayedItems = TodoDataManager.shared.todoItems
     }
     
     // MARK: - Helper
     
     private func configureNav() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "YYYY년 M월 dd일 (EE)"
-        let currentDate = dateFormatter.string(from: Date())
-
-        navigationItem.title = currentDate
+        navigationItem.title = "MyTodo"
     
         let navigationBarAppearance = UINavigationBarAppearance().then {
             $0.configureWithOpaqueBackground()
@@ -241,7 +237,7 @@ class TodoListViewController: UIViewController {
 
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.isEmpty ? 1 : sections.count
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -267,18 +263,10 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if sections.isEmpty {
-            return nil
-        } else {
-            let category = todayCategories[section]
-            if let items = sections[category], !items.isEmpty {
-                return category == "전체" ? nil : category
-            } else {
-                return nil
-            }
-        }
+        let category = Array(sections.keys)[section]
+        return category
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let category = todayCategories[section]
         if let items = sections[category], !items.isEmpty {
@@ -300,27 +288,24 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            todoItems.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
-            let itemToRemove = self.todoItems[indexPath.row]
+            let _ = self.todoItems[indexPath.row]
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
             TodoDataManager.shared.saveTodoItems()
-            
+
             self.getItemsForCategory("전체")
-            
+
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            let category = self.todayCategories[indexPath.section]
+            if self.sections[category]?.isEmpty ?? true {
+                self.sections.removeValue(forKey: category)
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
-
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 
@@ -329,12 +314,13 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             let completedItem = self.todoItems[indexPath.row]
             TodoDataManager.shared.completedItems.append(completedItem)
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+
+            self.getItemsForCategory("전체")
+            tableView.reloadData()
             completionHandler(true)
         }
         completeAction.image = UIImage(systemName: "text.badge.checkmark")
         completeAction.backgroundColor = .systemGreen
-
         return UISwipeActionsConfiguration(actions: [completeAction])
     }
 
@@ -344,15 +330,21 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editVC = TodoEditViewController()
-//        editVC.delegate = self
-//        editVC.todoItem = todoItems[indexPath.row]
-//        editVC.todoItemIndex = indexPath.row
-
-        self.present(editVC, animated: true, completion: nil)
+        //editVC.delegate = self
+        
+        let navigationController = UINavigationController(rootViewController: editVC)
+        navigationController.modalPresentationStyle = .pageSheet
+        let sheet = navigationController.presentationController as? UISheetPresentationController
+        sheet?.detents = [.medium()]
+        sheet?.prefersGrabberVisible = true
+        sheet?.preferredCornerRadius = 25
+        sheet?.animateChanges {
+            sheet?.selectedDetentIdentifier = .medium
+        }
+        present(navigationController, animated: true, completion: nil)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
 }
 
 // MARK: - TodoAddViewControllerDelegate
@@ -362,8 +354,20 @@ extension TodoListViewController: TodoAddViewControllerDelegate {
         TodoDataManager.shared.todoItems.append(item)
         TodoDataManager.shared.saveTodoItems()
 
-        getItemsForCategory("전체")
-        listTableView.reloadData()
+        let category = item.category
+        if sections[category] == nil {
+            sections[category] = [item]
+            displayedItems.append(item)
+            let newSectionIndex = todayCategories.firstIndex(of: category) ?? 0
+            listTableView.insertSections([newSectionIndex], with: .automatic)
+        } else {
+            sections[category]?.append(item)
+            displayedItems.append(item)
+            if let section = todayCategories.firstIndex(of: category) {
+                let indexPath = IndexPath(row: sections[category]!.count - 1, section: section)
+                listTableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        }
     }
 }
 

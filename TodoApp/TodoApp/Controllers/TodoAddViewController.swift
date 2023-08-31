@@ -99,6 +99,7 @@ class TodoAddViewController: UIViewController {
         let navigationBarAppearance = UINavigationBarAppearance().then {
             $0.configureWithDefaultBackground()
             $0.backgroundColor = .white
+            $0.shadowColor = nil
         }
 
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
@@ -113,7 +114,7 @@ class TodoAddViewController: UIViewController {
             button.setTitleColor(.black, for: .normal)
             button.backgroundColor = .white
             button.layer.cornerRadius = 15
-            button.layer.borderWidth = 1
+            button.layer.borderWidth = 0.5
             button.layer.borderColor = UIColor.lightGray.cgColor
             button.tag = index
             button.addTarget(self, action: #selector(categoryButtonTapped), for: .touchUpInside)
@@ -166,7 +167,7 @@ class TodoAddViewController: UIViewController {
         }
 
         saveButton.snp.makeConstraints {
-            $0.top.equalTo(borderView.snp.bottom).offset(50)
+            $0.top.equalTo(borderView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(50)
