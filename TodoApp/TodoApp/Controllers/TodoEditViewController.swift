@@ -10,7 +10,9 @@ class TodoEditViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: TodoAddViewControllerDelegate?
+    weak var delegate: TodoEditViewControllerDelegate?
+    var selectedTodoItem: TodoItem?
+    var selectedIndex: Int?
     private var selectedDate: Date?
     private var selectedCategory: String?
     private let categories = ["과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
@@ -49,7 +51,7 @@ class TodoEditViewController: UIViewController {
     private lazy var calendarButton = UIButton(type: .system).then {
         $0.setImage(UIImage(systemName: "calendar"), for: .normal)
         $0.tintColor = .separator
-        //$0.addTarget(self, action: #selector(calendarButtonTapped), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(calendarButtonTapped), for: .touchUpInside)
     }
     
     private let datePicker = UIDatePicker().then {
@@ -75,7 +77,7 @@ class TodoEditViewController: UIViewController {
         $0.setTitleColor(.white, for: .normal)
         $0.layer.cornerRadius = 5
         $0.isEnabled = false
-        //$0.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(updateSaveButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - View Life Cycle
@@ -86,6 +88,7 @@ class TodoEditViewController: UIViewController {
         view.backgroundColor = .white
         
         todoTextField.delegate = self
+        configureCategoryButtons()
         configureNav()
         configureUI()
     }
@@ -105,6 +108,21 @@ class TodoEditViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
+    private func configureCategoryButtons() {
+        for (index, category) in categories.enumerated() {
+            let button = UIButton(type: .system)
+            button.setTitle(category, for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = .white
+            button.layer.cornerRadius = 15
+            button.layer.borderWidth = 0.5
+            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.tag = index
+            button.addTarget(self, action: #selector(categoryButtonTapped), for: .touchUpInside)
+            categoryButtons.append(button)
+        }
+    }
     
     private func configureUI() {
         view.addSubviews(categoryStackView, todoHeaderLabel, todoTextField, dateHeaderLabel, borderView, saveButton)
@@ -176,7 +194,7 @@ class TodoEditViewController: UIViewController {
         UIView.animate(withDuration: 0.2) {
             datePickerPopup.alpha = 1
         }
-        updateSaveButtonState()
+        updateSaveButtonTapped()
     }
     
     private func isFormComplete() -> Bool {
@@ -192,145 +210,48 @@ class TodoEditViewController: UIViewController {
             saveButton.isEnabled = false
         }
     }
+    
+    // MARK: - Actions
 
-//    // MARK: - Method & Action
-//
-//    func setupInitialData() {
-//        if let item = todoItem {
-//            selectedColor = item.color
-//            updateButtonBorders()
-//            todoTextField.text = item.content
-//
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd"
-//            selectedDateLabel.text = dateFormatter.string(from: item.date)
-//            selectedDateLabel.textColor = .black
-//            selectedDate = item.date
-//        }
-//    }
-//
-//    func getSelectedColor() -> UIColor? {
-//        return selectedColor
-//    }
-//
-//    private func createColorButton(color: UIColor) -> UIButton {
-//        let button = UIButton()
-//        button.backgroundColor = color
-//
-//        let diameter: CGFloat = 30
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.heightAnchor.constraint(equalToConstant: diameter).isActive = true
-//        button.widthAnchor.constraint(equalToConstant: diameter).isActive = true
-//        button.layer.cornerRadius = diameter / 2
-//        button.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
-//        return button
-//    }
-//
-//    private func updateButtonBorders() {
-//        for button in [yellowButton, greenButton, blueButton, pinkButton, indigoButton] {
-//            button.layer.borderWidth = 0
-//            button.layer.borderColor = UIColor.clear.cgColor
-//        }
-//
-//        if selectedColor == .systemYellow {
-//            yellowButton.layer.borderWidth = 3
-//            yellowButton.layer.borderColor = UIColor.lightGray.cgColor
-//        } else if selectedColor == .systemGreen {
-//            greenButton.layer.borderWidth = 3
-//            greenButton.layer.borderColor = UIColor.lightGray.cgColor
-//        } else if selectedColor == .systemBlue {
-//            blueButton.layer.borderWidth = 3
-//            blueButton.layer.borderColor = UIColor.lightGray.cgColor
-//        } else if selectedColor == .systemPink {
-//            pinkButton.layer.borderWidth = 3
-//            pinkButton.layer.borderColor = UIColor.lightGray.cgColor
-//        } else if selectedColor == .systemIndigo {
-//            indigoButton.layer.borderWidth = 3
-//            indigoButton.layer.borderColor = UIColor.lightGray.cgColor
-//        }
-//    }
-//
-//    @objc private func colorButtonTapped(sender: UIButton) {
-//        if sender == yellowButton {
-//            selectedColor = .systemYellow
-//        } else if sender == greenButton {
-//            selectedColor = .systemGreen
-//        } else if sender == blueButton {
-//            selectedColor = .systemBlue
-//        } else if sender == pinkButton {
-//            selectedColor = .systemPink
-//        } else if sender == indigoButton {
-//            selectedColor = .systemIndigo
-//        }
-//
-//        updateButtonBorders()
-//        updateSaveButtonState()
-//    }
-//
-//    @objc private func handleCalendarButton() {
-//        didTapCalendarButton()
-//    }
-//
-//    private func didTapCalendarButton() {
-//        let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
-//        datePickerPopup.onSelectDate = { [weak self] selectedDate in
-//            guard let self = self else { return }
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd"
-//            self.selectedDateLabel.text = dateFormatter.string(from: selectedDate)
-//            self.selectedDateLabel.textColor = .black
-//
-//            self.selectedDate = selectedDate
-//        }
-//
-//        datePickerPopup.alpha = 0
-//        self.view.addSubview(datePickerPopup)
-//
-//        UIView.animate(withDuration: 0.2) {
-//            datePickerPopup.alpha = 1
-//        }
-//        updateSaveButtonState()
-//    }
-//
-//    private func isFormComplete() -> Bool {
-//        return selectedColor != nil && !(todoTextField.text?.isEmpty ?? true)
-//    }
-//
-//    private func updateSaveButtonState() {
-//        if isFormComplete() {
-//            saveButton.backgroundColor = UIColor(red: 0.51, green: 0.57, blue: 0.63, alpha: 1.00)
-//            saveButton.isEnabled = true
-//        } else {
-//            saveButton.backgroundColor = .lightGray
-//            saveButton.isEnabled = false
-//        }
-//    }
-//
-//    @objc private func saveButtonTapped() {
-//        guard let content = todoTextField.text, !content.isEmpty,
-//              let index = todoItemIndex else {
-//            return
-//        }
-//
-//        let finalSelectedColor = selectedColor ?? .systemYellow
-//        let updatedTodoItem = TodoItem(color: finalSelectedColor, content: content, date: selectedDate ?? Date())
-//
-//        delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
-//
-//        dismiss(animated: true, completion: nil)
-//    }
+    @objc private func categoryButtonTapped(_ sender: UIButton) {
+        categoryButtons.forEach { button in
+            button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
+        }
+        sender.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
+        sender.setTitleColor(.white, for: .normal)
+        selectedCategory = categories[sender.tag]
+        updateSaveButtonTapped()
+    }
+    
+    @objc private func calendarButtonTapped() {
+        didTapCalendarButton()
+    }
+
+    @objc private func updateSaveButtonTapped() {
+        guard let content = todoTextField.text, !content.isEmpty,
+              let category = selectedCategory,
+              let date = selectedDate,
+              let index = selectedIndex else {
+            return
+        }
+
+        let todoItem = TodoItem(content: content, category: category, date: date)
+        delegate?.didUpdateTodoItem(todoItem, at: index)
+        dismiss(animated: true, completion: nil)
+    }
 }
-//
+
 // MARK: - UITextFieldDelegate
 
 extension TodoEditViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        updateSaveButtonState()
+        updateSaveButtonTapped()
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         DispatchQueue.main.async {
-            self.updateSaveButtonState()
+            self.updateSaveButtonTapped()
         }
         return true
     }

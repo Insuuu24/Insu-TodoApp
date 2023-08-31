@@ -5,16 +5,10 @@ import SnapKit
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
-    
-    private let introLabel = UILabel().then {
-        $0.text = "Insu's TodoList"
-        $0.font = .systemFont(ofSize: 32, weight: .semibold)
-        $0.textColor = .black
-    }
-    
+
     private let homeImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 125
+        $0.layer.cornerRadius = 150
         $0.clipsToBounds = true
         $0.image = UIImage(named: "placeholder")
     }
@@ -32,7 +26,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.75, green: 0.76, blue: 0.78, alpha: 1.00)
         configureUI()
         loadImage(from: "https://avatars.githubusercontent.com/u/117909631?v=4&h=150&w=150")
     }
@@ -50,21 +43,18 @@ class HomeViewController: UIViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-        view.addSubviews(introLabel, homeImageView, listButton)
-        
-        introLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaInsets).offset(100)
-            $0.centerX.equalToSuperview()
-        }
+        view.backgroundColor = .white
+        view.addSubviews(homeImageView, listButton)
         
         homeImageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.height.equalTo(250)
+            $0.top.equalTo(view.safeAreaInsets).offset(200)
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(300)
         }
         
         listButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(homeImageView.snp.bottom).offset(150)
+            $0.top.equalTo(homeImageView.snp.bottom).offset(200)
             $0.width.equalTo(300)
             $0.height.equalTo(65)
         }

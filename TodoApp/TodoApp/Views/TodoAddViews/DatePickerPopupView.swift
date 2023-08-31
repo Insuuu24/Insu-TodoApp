@@ -1,29 +1,25 @@
 import UIKit
+import Then
+import SnapKit
 
 class DatePickerPopupView: UIView {
     
     // MARK: - Properties
     
-    private var datePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        picker.datePickerMode = .date
-        picker.preferredDatePickerStyle = .inline
-        return picker
-    }()
+    private var datePicker = UIDatePicker().then {
+        $0.datePickerMode = .date
+        $0.preferredDatePickerStyle = .inline
+    }
     
-    private lazy var doneButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("확인", for: .normal)
-        button.addTarget(self, action: #selector(handleDone), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var cancelButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
-        return button
-    }()
+    private lazy var doneButton = UIButton(type: .system).then {
+        $0.setTitle("확인", for: .normal)
+        $0.addTarget(self, action: #selector(handleDone), for: .touchUpInside)
+    }
+    
+    private lazy var cancelButton = UIButton(type: .system).then {
+        $0.setTitle("취소", for: .normal)
+        $0.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+    }
     
     var onSelectDate: ((Date) -> Void)?
     var onCancel: (() -> Void)?
@@ -42,39 +38,38 @@ class DatePickerPopupView: UIView {
     // MARK: - Setup Layout
     
     private func setupLayout() {
-        let contentView = UIView()
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 10
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.systemGray5.cgColor
-        contentView.clipsToBounds = true
+        let contentView = UIView().then {
+            $0.backgroundColor = .white
+            $0.layer.cornerRadius = 10
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.systemGray5.cgColor
+            $0.clipsToBounds = true
+        }
         
-        contentView.addSubview(datePicker)
-        contentView.addSubview(doneButton)
-        contentView.addSubview(cancelButton)
-        
+        contentView.addSubviews(datePicker, doneButton, cancelButton)
         addSubview(contentView)
         
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(20)
+            $0.width.equalTo(320)
+        }
         
-        NSLayoutConstraint.activate([
-            contentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            contentView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 20),
-            contentView.widthAnchor.constraint(equalToConstant: 320),
-            
-            datePicker.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            datePicker.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            
-            doneButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 10),
-            doneButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            
-            cancelButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 10),
-            cancelButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            cancelButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
-        ])
+        datePicker.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(20)
+        }
+        
+        doneButton.snp.makeConstraints {
+            $0.top.equalTo(datePicker.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        cancelButton.snp.makeConstraints {
+            $0.top.equalTo(datePicker.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(10)
+            $0.bottom.equalToSuperview().offset(-10)
+        }
     }
 
     // MARK: - Method & Action

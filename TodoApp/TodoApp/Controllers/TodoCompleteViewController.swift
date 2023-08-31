@@ -23,8 +23,6 @@ class TodoCompleteViewController: UIViewController {
     // MARK: - Navigation Bar
     
     private func configureNav() {
-        navigationItem.title = "완료한 Todo"
-        
         let navigationBarAppearance = UINavigationBarAppearance().then {
             $0.configureWithOpaqueBackground()
             $0.backgroundColor = .white
@@ -36,6 +34,15 @@ class TodoCompleteViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.compactAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
+        let logoImage = UIImage(named: "completed-Todo.png")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.contentMode = .scaleAspectFit
+
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 44))
+        logoImageView.frame = container.bounds
+        container.addSubview(logoImageView)
+        navigationItem.titleView = container
     }
     
     // MARK: - Setup Layout
