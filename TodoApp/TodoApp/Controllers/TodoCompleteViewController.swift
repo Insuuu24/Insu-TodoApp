@@ -8,6 +8,8 @@ class TodoCompleteViewController: UIViewController {
     
     private let completeListTableView = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.estimatedRowHeight = 50.0
+        $0.rowHeight = UITableView.automaticDimension
         $0.register(TodoListCell.self, forCellReuseIdentifier: "CompletedTodoCell")
     }
     
@@ -20,7 +22,7 @@ class TodoCompleteViewController: UIViewController {
         configureUI()
     }
     
-    // MARK: - Navigation Bar
+    // MARK: - Helpers
     
     private func configureNav() {
         let navigationBarAppearance = UINavigationBarAppearance().then {
@@ -29,7 +31,6 @@ class TodoCompleteViewController: UIViewController {
         }
         
         navigationController?.navigationBar.topItem?.title = ""
-        navigationController?.setNeedsStatusBarAppearanceUpdate()
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.compactAppearance = navigationBarAppearance
@@ -45,23 +46,18 @@ class TodoCompleteViewController: UIViewController {
         navigationItem.titleView = container
     }
     
-    // MARK: - Setup Layout
-    
     private func configureUI() {
         view.addSubview(completeListTableView)
         
         completeListTableView.delegate = self
         completeListTableView.dataSource = self
-
-        completeListTableView.estimatedRowHeight = 50.0
-        completeListTableView.rowHeight = UITableView.automaticDimension
         
-        NSLayoutConstraint.activate([
-            completeListTableView.topAnchor.constraint(equalTo: view.topAnchor),
-            completeListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            completeListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            completeListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        completeListTableView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
     }
 }
 
@@ -89,11 +85,9 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
-        
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    // 셀 터치 비활성화
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }

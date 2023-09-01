@@ -15,29 +15,28 @@ class TodoAddViewController: UIViewController {
     private var selectedCategory: String?
     private let categories = ["과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
     private var categoryButtons: [UIButton] = []
-
     
     private let todoHeaderLabel = UILabel().then {
         $0.text = "Todo"
-        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
     private let todoTextField = UITextField().then {
         $0.borderStyle = .none
-        $0.layer.borderWidth = 0.5
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.cornerRadius = 5
+        $0.placeholder = "Todo를 입력해주세요"
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.layer.cornerRadius = 10
     }
 
     private lazy var borderView = UIView().then {
-        $0.layer.borderWidth = 0.5
-        $0.layer.borderColor = UIColor.lightGray.cgColor
-        $0.layer.cornerRadius = 5
+        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.layer.cornerRadius = 10
     }
     
     private let dateHeaderLabel = UILabel().then {
         $0.text = "Date"
-        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
     private let selectedDateLabel = UILabel().then {
@@ -51,11 +50,7 @@ class TodoAddViewController: UIViewController {
         $0.tintColor = .separator
         $0.addTarget(self, action: #selector(calendarButtonTapped), for: .touchUpInside)
     }
-    
-    private let datePicker = UIDatePicker().then {
-        $0.datePickerMode = .date
-    }
-    
+
    private lazy var categoryStackView = UIStackView(arrangedSubviews: categoryButtons).then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
@@ -172,29 +167,10 @@ class TodoAddViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-16)
             $0.height.equalTo(50)
         }
+        todoTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: todoTextField.frame.height))
+        todoTextField.leftViewMode = .always
     }
-    
-    private func didTapCalendarButton() {
-        let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
-        datePickerPopup.onSelectDate = { [weak self] selectedDate in
-            guard let self = self else { return }
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            self.selectedDateLabel.text = dateFormatter.string(from: selectedDate)
-            self.selectedDateLabel.textColor = .black
-            
-            self.selectedDate = selectedDate
-            self.updateSaveButtonState()
-        }
-        datePickerPopup.alpha = 0
-        self.view.addSubview(datePickerPopup)
 
-        UIView.animate(withDuration: 0.2) {
-            datePickerPopup.alpha = 1
-        }
-        updateSaveButtonState()
-    }
-    
     private func isFormComplete() -> Bool {
         return selectedCategory != nil && selectedDate != nil && !(todoTextField.text?.isEmpty ?? true)
     }
@@ -223,7 +199,24 @@ class TodoAddViewController: UIViewController {
     }
 
     @objc private func calendarButtonTapped() {
-        didTapCalendarButton()
+        let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
+        datePickerPopup.onSelectDate = { [weak self] selectedDate in
+            guard let self = self else { return }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.selectedDateLabel.text = dateFormatter.string(from: selectedDate)
+            self.selectedDateLabel.textColor = .black
+            
+            self.selectedDate = selectedDate
+            self.updateSaveButtonState()
+        }
+        datePickerPopup.alpha = 0
+        self.view.addSubview(datePickerPopup)
+
+        UIView.animate(withDuration: 0.2) {
+            datePickerPopup.alpha = 1
+        }
+        updateSaveButtonState()
     }
 
     @objc private func saveButtonTapped() {

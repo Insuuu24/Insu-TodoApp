@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
         }
         
         listButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaInsets).inset(250)
+            $0.bottom.equalTo(view.safeAreaInsets).inset(300)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(200)
         }
