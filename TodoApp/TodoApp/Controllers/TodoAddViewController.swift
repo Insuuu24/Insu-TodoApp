@@ -6,7 +6,7 @@ protocol TodoAddViewControllerDelegate: AnyObject {
     func didAddTodoItem(_ item: TodoItem)
 }
 
-class TodoAddViewController: UIViewController {
+final class TodoAddViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -78,9 +78,6 @@ class TodoAddViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-        
-        todoTextField.delegate = self
         configureNav()
         configureCategoryButtons()
         configureUI()
@@ -118,9 +115,11 @@ class TodoAddViewController: UIViewController {
     }
     
     private func configureUI() {
+        view.backgroundColor = .white
         view.addSubviews(categoryStackView, todoHeaderLabel, todoTextField, dateHeaderLabel, borderView, saveButton)
         borderView.addSubview(stackView)
-
+        todoTextField.delegate = self
+        
         categoryStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             $0.leading.equalToSuperview().offset(16)

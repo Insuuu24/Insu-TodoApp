@@ -2,7 +2,7 @@ import UIKit
 import Then
 import SnapKit
 
-class TodoCompleteViewController: UIViewController {
+final class TodoCompleteViewController: UIViewController {
     
     // MARK: - Properties
     

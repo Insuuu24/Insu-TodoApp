@@ -6,7 +6,7 @@ protocol TodoEditViewControllerDelegate: AnyObject {
     func didUpdateTodoItem(_ item: TodoItem, at index: Int)
 }
 
-class TodoEditViewController: UIViewController {
+final class TodoEditViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -78,9 +78,6 @@ class TodoEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        todoTextField.delegate = self
-        
         configureCategoryButtons()
         configureNav()
         configureUI()
@@ -144,8 +141,10 @@ class TodoEditViewController: UIViewController {
     }
     
     private func configureUI() {
+        view.backgroundColor = .white
         view.addSubviews(categoryStackView, todoHeaderLabel, todoTextField, dateHeaderLabel, borderView, saveButton)
         borderView.addSubview(stackView)
+        todoTextField.delegate = self
         
         categoryStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
