@@ -2,9 +2,9 @@
 
 ## 📱 앱 간단소개
 
-| LaunchScreen -> HomeVC | HomeVC -> TodoListVC | HomeVC -> TodoCompletedVC | Todo 추가 |
+| LaunchScreen -> HomeVC | HomeVC -> TodoListVC | HomeVC -> Todo완료VC | Todo 추가 |
 | --------------- | --------------- | --------------- | --------------- |
-| <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/d3f35d0b-a67a-4d4a-895d-d7050fb930d8" width = "300" height = "500"/> | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/5c6a5aa3-9b58-411d-a773-f7fc60f9b44b" width = "300" height = "500"/> | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/51f536b6-3cc6-4cdd-8db7-d51994c83d04" width = "300" height = "500"/>  | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/d6a0e531-6b5b-413a-a669-86a157f4464d" width = "300" height = "500"/>  |
+| <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/d3f35d0b-a67a-4d4a-895d-d7050fb930d8" width = "200" height = "400"/> | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/5c6a5aa3-9b58-411d-a773-f7fc60f9b44b" width = "200" height = "400"/> | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/51f536b6-3cc6-4cdd-8db7-d51994c83d04" width = "200" height = "400"/>  | <img src = "https://github.com/Insuuu24/Insu-TodoApp/assets/117909631/d6a0e531-6b5b-413a-a669-86a157f4464d" width = "200" height = "400"/>  |
 
 
 ## 📚 개발 환경 및 라이브러리
