@@ -62,7 +62,7 @@ final class HomeViewController: UIViewController {
         }
         
         listButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaInsets).inset(300)
+            $0.bottom.equalTo(view.safeAreaInsets).inset(200)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(200)
         }
@@ -95,7 +95,13 @@ final class HomeViewController: UIViewController {
             self.navigationController?.pushViewController(todoCompleteVC, animated: true)
         }
         
-        let menu = UIMenu(title: "Todo List Menu", identifier: nil, options: .displayInline, children: [todoCompleteListAction, todoListAction])
+        let randomCatAction = UIAction(title: "고양이 사진 보러가기", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
+            guard let self = self else { return }
+            let petVC = PetViewController()
+            self.navigationController?.pushViewController(petVC, animated: true)
+        }
+        
+        let menu = UIMenu(title: "Todo List Menu", identifier: nil, options: .displayInline, children: [randomCatAction, todoCompleteListAction, todoListAction])
         listButton.menu = menu
         listButton.showsMenuAsPrimaryAction = true
     }
