@@ -95,7 +95,7 @@ final class HomeViewController: UIViewController {
             self.navigationController?.pushViewController(todoCompleteVC, animated: true)
         }
         
-        let randomCatAction = UIAction(title: "고양이 사진 보러가기", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
+        let randomCatAction = UIAction(title: "고앵이 사진 보러가기", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
             let petVC = PetViewController()
             self.navigationController?.pushViewController(petVC, animated: true)

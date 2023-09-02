@@ -12,6 +12,7 @@ import SnapKit
 class PetViewController: UIViewController {
     
     // MARK: - Properties
+    
     private let catImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 150
@@ -25,15 +26,11 @@ class PetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNav()
         configureUI()
         fetchRandomCatImage()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNav()
-    }
-    
+
     // MARK: - Helpers
     
     private func configureNav() {
