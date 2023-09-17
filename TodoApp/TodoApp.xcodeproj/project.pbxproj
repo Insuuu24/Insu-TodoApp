@@ -28,6 +28,7 @@
 		EBABFB602A7F8CED00BAB00E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */; };
 		EBABFB622A7F8D0600BAB00E /* TodoCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB612A7F8D0600BAB00E /* TodoCompleteViewController.swift */; };
 		EBABFB662A7FBE8D00BAB00E /* TodoAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */; };
+		EBCFDEA22AB7435100B9AA27 /* PetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */; };
 		EBF2373C2A83A24D0059A5D1 /* TodoDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF2373B2A83A24D0059A5D1 /* TodoDataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		EBABFB612A7F8D0600BAB00E /* TodoCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCompleteViewController.swift; sourceTree = "<group>"; };
 		EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAddViewController.swift; sourceTree = "<group>"; };
+		EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewModel.swift; sourceTree = "<group>"; };
 		EBF2373B2A83A24D0059A5D1 /* TodoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +94,7 @@
 		EB3228AC2AB47C8F00B8A571 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 			files = (
 				EB3C49FF2A81D5F400F4B291 /* TodoItem.swift in Sources */,
 				EBABFB602A7F8CED00BAB00E /* TodoListViewController.swift in Sources */,
+				EBCFDEA22AB7435100B9AA27 /* PetViewModel.swift in Sources */,
 				EB76EACB2A80C16100D57868 /* DatePickerPopupView.swift in Sources */,
 				EBABFB4D2A7F73EC00BAB00E /* HomeViewController.swift in Sources */,
 				EBABFB492A7F73EC00BAB00E /* AppDelegate.swift in Sources */,

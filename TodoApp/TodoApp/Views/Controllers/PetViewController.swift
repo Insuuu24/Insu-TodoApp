@@ -20,6 +20,7 @@ class PetViewController: UIViewController {
         $0.image = UIImage(named: "placeholder")
     }
     
+    private let viewModel = PetViewModel()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     // MARK: - View Life Cycle
@@ -65,48 +66,26 @@ class PetViewController: UIViewController {
         activityIndicator.startAnimating()
     }
     
+    private func bindViewModel() {
+        viewModel.fetchRandomCatImage { [weak self] result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                    self?.catImageView.image = image
+                    self?.catImageView.snp.updateConstraints {
+                        $0.width.height.equalTo(300)
+                    }
+                }
+            case .failure(let error):
+                print("오류로 인해 고양이 이미지를 불러오기 실패: ", error.localizedDescription)
+            }
+        }
+    }
+    
     @objc private func fetchRandomCatImage() {
-        guard let url = URL(string: "https://api.thecatapi.com/v1/images/search") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
         catImageView.image = UIImage(named: "placeholder")
         activityIndicator.startAnimating()
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print("오류로 인해 고양이 이미지를 불러오기 실패: ", error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                if let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]],
-                   let petImageUrlString = jsonArray.first?["url"] as? String,
-                   let petImageUrl = URL(string: petImageUrlString) {
-                    
-                    URLSession.shared.dataTask(with: petImageUrl) { (data, response, error) in
-                        if let error = error {
-                            print("오류로 인해 고양이 이미지를 불러오기 실패: ", error.localizedDescription)
-                            return
-                        }
-                        
-                        if let data = data, let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                self.activityIndicator.stopAnimating()
-                                self.catImageView.image = image
-                                self.catImageView.snp.updateConstraints {
-                                    $0.width.height.equalTo(300)
-                                }
-                            }
-                        }
-                    }.resume()
-                }
-            } catch let jsonError {
-                print("Failed to decode JSON with error: ", jsonError.localizedDescription)
-            }
-        }.resume()
+        bindViewModel()
     }
 }
