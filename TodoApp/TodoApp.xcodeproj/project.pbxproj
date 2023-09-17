@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DFE138930D0BDD8D4BD6DA40 /* Pods_TodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5698B3F8EF18C303964B0452 /* Pods_TodoApp.framework */; };
 		EB1C38542A84C302006AA4CC /* TodoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */; };
+		EB3228A92AB3DEE900B8A571 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3228A82AB3DEE900B8A571 /* TabBarController.swift */; };
+		EB3228AB2AB3E06900B8A571 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3228AA2AB3E06900B8A571 /* ProfileViewController.swift */; };
 		EB3A7FC22AA1B86300DFCD96 /* PetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A7FC12AA1B86300DFCD96 /* PetViewController.swift */; };
 		EB3A97E62AA0DC1E009821F5 /* insu-memoji (1).png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E52AA0DC1E009821F5 /* insu-memoji (1).png */; };
 		EB3A97E82AA0DD46009821F5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E72AA0DD46009821F5 /* logo.png */; };
@@ -34,6 +36,8 @@
 		5698B3F8EF18C303964B0452 /* Pods_TodoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEFFE8215F17329EE99B3D5 /* Pods-TodoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp.release.xcconfig"; path = "Target Support Files/Pods-TodoApp/Pods-TodoApp.release.xcconfig"; sourceTree = "<group>"; };
 		EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEditViewController.swift; sourceTree = "<group>"; };
+		EB3228A82AB3DEE900B8A571 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		EB3228AA2AB3E06900B8A571 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EB3A7FC12AA1B86300DFCD96 /* PetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewController.swift; sourceTree = "<group>"; };
 		EB3A97E52AA0DC1E009821F5 /* insu-memoji (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "insu-memoji (1).png"; sourceTree = "<group>"; };
 		EB3A97E72AA0DD46009821F5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -85,6 +89,30 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EB3228AC2AB47C8F00B8A571 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EB3228AD2AB47CBA00B8A571 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EB3A97E42AA0DC0F009821F5 /* Img */,
+				EBABFB512A7F73ED00BAB00E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EB3228AE2AB47CE700B8A571 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		EB3A97E42AA0DC0F009821F5 /* Img */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,16 +121,15 @@
 				EB3A97E92AA0DF50009821F5 /* completed-Todo.png */,
 				EB3A97ED2AA100B3009821F5 /* clickMe.png */,
 			);
-			name = Img;
-			path = ../Img;
+			path = Img;
 			sourceTree = "<group>";
 		};
-		EB76EAC12A8086A500D57868 /* TodoAddViews */ = {
+		EB76EAC12A8086A500D57868 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */,
 			);
-			path = TodoAddViews;
+			path = View;
 			sourceTree = "<group>";
 		};
 		EBABFB3C2A7F73EC00BAB00E = {
@@ -127,13 +154,12 @@
 			isa = PBXGroup;
 			children = (
 				EBABFB532A7F73ED00BAB00E /* LaunchScreen.storyboard */,
-				EB3A97E42AA0DC0F009821F5 /* Img */,
+				EBABFB562A7F73ED00BAB00E /* Info.plist */,
+				EB3228AD2AB47CBA00B8A571 /* Resources */,
 				EBD01CE12A85F43F00ADDAE1 /* Helpers */,
 				EBABFB5C2A7F8B3E00BAB00E /* Models */,
 				EBABFB5D2A7F8B4600BAB00E /* Views */,
-				EBABFB5E2A7F8B4A00BAB00E /* Controllers */,
-				EBABFB512A7F73ED00BAB00E /* Assets.xcassets */,
-				EBABFB562A7F73ED00BAB00E /* Info.plist */,
+				EB3228AC2AB47C8F00B8A571 /* ViewModels */,
 			);
 			path = TodoApp;
 			sourceTree = "<group>";
@@ -150,8 +176,9 @@
 		EBABFB5D2A7F8B4600BAB00E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */,
-				EB76EAC12A8086A500D57868 /* TodoAddViews */,
+				EB3228AE2AB47CE700B8A571 /* Cell */,
+				EB76EAC12A8086A500D57868 /* View */,
+				EBABFB5E2A7F8B4A00BAB00E /* Controllers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,12 +186,14 @@
 		EBABFB5E2A7F8B4A00BAB00E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EB3228A82AB3DEE900B8A571 /* TabBarController.swift */,
 				EBABFB4C2A7F73EC00BAB00E /* HomeViewController.swift */,
 				EBABFB5F2A7F8CED00BAB00E /* TodoListViewController.swift */,
 				EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */,
 				EB1C38532A84C302006AA4CC /* TodoEditViewController.swift */,
 				EBABFB612A7F8D0600BAB00E /* TodoCompleteViewController.swift */,
 				EB3A7FC12AA1B86300DFCD96 /* PetViewController.swift */,
+				EB3228AA2AB3E06900B8A571 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -308,6 +337,8 @@
 				EB726E732A86771200FA7A1F /* Extensions.swift in Sources */,
 				EBABFB622A7F8D0600BAB00E /* TodoCompleteViewController.swift in Sources */,
 				EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */,
+				EB3228A92AB3DEE900B8A571 /* TabBarController.swift in Sources */,
+				EB3228AB2AB3E06900B8A571 /* ProfileViewController.swift in Sources */,
 				EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */,
 				EB1C38542A84C302006AA4CC /* TodoEditViewController.swift in Sources */,
 			);

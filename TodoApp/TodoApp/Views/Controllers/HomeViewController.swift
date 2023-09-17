@@ -85,25 +85,20 @@ final class HomeViewController: UIViewController {
     @objc private func listButtonTapped() {
         let todoListAction = UIAction(title: "Todo List", image: UIImage(systemName: "list.bullet"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
-            let todoListVC = TodoListViewController()
-            self.navigationController?.pushViewController(todoListVC, animated: true)
+            let tabBarController = TabBarController()
+            tabBarController.selectedIndex = 0
+            self.view.window?.rootViewController = tabBarController
+            self.view.window?.makeKeyAndVisible()
         }
-        
-        let todoCompleteListAction = UIAction(title: "완료한 Todo", image: UIImage(systemName: "checkmark.square"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
-            guard let self = self else { return }
-            let todoCompleteVC = TodoCompleteViewController()
-            self.navigationController?.pushViewController(todoCompleteVC, animated: true)
-        }
-        
+
         let randomCatAction = UIAction(title: "고앵이 사진 보러가기", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
             guard let self = self else { return }
             let petVC = PetViewController()
             self.navigationController?.pushViewController(petVC, animated: true)
         }
-        
-        let menu = UIMenu(title: "Todo List Menu", identifier: nil, options: .displayInline, children: [randomCatAction, todoCompleteListAction, todoListAction])
+
+        let menu = UIMenu(title: "Todo List Menu", identifier: nil, options: .displayInline, children: [randomCatAction, todoListAction])
         listButton.menu = menu
         listButton.showsMenuAsPrimaryAction = true
     }
-    
 }
