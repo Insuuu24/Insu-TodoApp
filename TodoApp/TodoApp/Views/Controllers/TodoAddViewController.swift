@@ -25,12 +25,12 @@ final class TodoAddViewController: UIViewController {
         $0.borderStyle = .none
         $0.placeholder = "Todo를 입력해주세요"
         $0.font = UIFont.systemFont(ofSize: 14)
-        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.backgroundColor = Constant.textFieldBorderColor
         $0.layer.cornerRadius = 10
     }
 
     private lazy var borderView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.backgroundColor = Constant.textFieldBorderColor
         $0.layer.cornerRadius = 10
     }
     
@@ -51,7 +51,7 @@ final class TodoAddViewController: UIViewController {
         $0.addTarget(self, action: #selector(calendarButtonTapped), for: .touchUpInside)
     }
 
-   private lazy var categoryStackView = UIStackView(arrangedSubviews: categoryButtons).then {
+    private lazy var categoryStackView = UIStackView(arrangedSubviews: categoryButtons).then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
         $0.spacing = 10
@@ -73,7 +73,7 @@ final class TodoAddViewController: UIViewController {
         $0.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,7 +176,7 @@ final class TodoAddViewController: UIViewController {
 
     private func updateSaveButtonState() {
         if isFormComplete() {
-            saveButton.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
+            saveButton.backgroundColor = Constant.appColor
             saveButton.isEnabled = true
         } else {
             saveButton.backgroundColor = .systemGray4
@@ -191,14 +191,14 @@ final class TodoAddViewController: UIViewController {
             button.backgroundColor = .white
             button.setTitleColor(.black, for: .normal)
         }
-        sender.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
+        sender.backgroundColor = Constant.appColor
         sender.setTitleColor(.white, for: .normal)
         selectedCategory = categories[sender.tag]
         updateSaveButtonState()
     }
 
     @objc private func calendarButtonTapped() {
-        let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
+        let datePickerPopup = DatePickerPopupView(frame: view.bounds)
         datePickerPopup.onSelectDate = { [weak self] selectedDate in
             guard let self = self else { return }
             let dateFormatter = DateFormatter()
@@ -210,7 +210,7 @@ final class TodoAddViewController: UIViewController {
             self.updateSaveButtonState()
         }
         datePickerPopup.alpha = 0
-        self.view.addSubview(datePickerPopup)
+        view.addSubview(datePickerPopup)
 
         UIView.animate(withDuration: 0.2) {
             datePickerPopup.alpha = 1
@@ -221,7 +221,8 @@ final class TodoAddViewController: UIViewController {
     @objc private func saveButtonTapped() {
         guard let content = todoTextField.text, !content.isEmpty,
               let category = selectedCategory,
-              let date = selectedDate else {
+              let date = selectedDate
+        else {
             return
         }
 

@@ -23,7 +23,7 @@ class PetViewController: UIViewController {
     private let viewModel = PetViewModel()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
-    // MARK: - View Life Cycle
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

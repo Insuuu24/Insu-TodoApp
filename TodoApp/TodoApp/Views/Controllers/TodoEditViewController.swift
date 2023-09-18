@@ -25,12 +25,12 @@ final class TodoEditViewController: UIViewController {
     
     private let todoTextField = UITextField().then {
         $0.borderStyle = .none
-        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.backgroundColor = Constant.textFieldBorderColor
         $0.layer.cornerRadius = 10
     }
 
     private lazy var borderView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+        $0.backgroundColor = Constant.textFieldBorderColor
         $0.layer.cornerRadius = 10
     }
     
@@ -73,7 +73,7 @@ final class TodoEditViewController: UIViewController {
         $0.addTarget(self, action: #selector(updateSaveButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +82,6 @@ final class TodoEditViewController: UIViewController {
         configureNav()
         configureUI()
         populateUIWithSelectedTodoItem()
-        
     }
     
     // MARK: - Helpers
@@ -224,7 +223,7 @@ final class TodoEditViewController: UIViewController {
     }
     
     @objc private func calendarButtonTapped() {
-        let datePickerPopup = DatePickerPopupView(frame: self.view.bounds)
+        let datePickerPopup = DatePickerPopupView(frame: view.bounds)
         datePickerPopup.onSelectDate = { [weak self] selectedDate in
             guard let self = self else { return }
             let dateFormatter = DateFormatter()
@@ -236,7 +235,7 @@ final class TodoEditViewController: UIViewController {
             self.updateSaveButtonState()
         }
         datePickerPopup.alpha = 0
-        self.view.addSubview(datePickerPopup)
+        view.addSubview(datePickerPopup)
         
         UIView.animate(withDuration: 0.2) {
             datePickerPopup.alpha = 1
@@ -253,7 +252,7 @@ final class TodoEditViewController: UIViewController {
 
         let updatedTodoItem = TodoItem(content: content, category: category, date: date)
         delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 

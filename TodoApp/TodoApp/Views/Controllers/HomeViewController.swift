@@ -24,7 +24,7 @@ final class HomeViewController: UIViewController {
         $0.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +34,12 @@ final class HomeViewController: UIViewController {
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - Helpers
@@ -71,7 +71,7 @@ final class HomeViewController: UIViewController {
     private func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
 
-        URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             if let data = data, let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     self?.homeImageView.image = image

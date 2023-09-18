@@ -13,7 +13,7 @@ final class TodoCompleteViewController: UIViewController {
         $0.register(TodoListCell.self, forCellReuseIdentifier: "CompletedTodoCell")
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +79,7 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
             TodoDataManager.shared.completedItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
@@ -91,5 +91,4 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }
-
 }

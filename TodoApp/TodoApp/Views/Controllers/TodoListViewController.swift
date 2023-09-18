@@ -3,14 +3,14 @@ import Then
 import SnapKit
 
 final class TodoListViewController: UIViewController {
-    
+
     // MARK: - Properties
-    
+
     var todoItems: [TodoItem] {
         get { return TodoDataManager.shared.todoItems }
         set { TodoDataManager.shared.todoItems = newValue }
     }
-    
+
     var displayedItems: [TodoItem] = []
     var sections: [String: [TodoItem]] = [:]
     var todayCategories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
@@ -23,7 +23,7 @@ final class TodoListViewController: UIViewController {
         $0.rowHeight = UITableView.automaticDimension
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     private let categoryScrollView = UIScrollView().then {
         $0.backgroundColor = .white
         $0.showsHorizontalScrollIndicator = false
@@ -37,7 +37,7 @@ final class TodoListViewController: UIViewController {
         $0.spacing = 10
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     private lazy var todoAddButton = UIButton().then {
         $0.setImage(UIImage(systemName: "plus"), for: .normal)
         $0.tintColor = .white
@@ -45,9 +45,9 @@ final class TodoListViewController: UIViewController {
         $0.layer.cornerRadius = 22.5
         $0.addTarget(self, action: #selector(todoAddButtonTapped), for: .touchUpInside)
     }
-    
-    // MARK: - View Life Cycle
-    
+
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,22 +57,22 @@ final class TodoListViewController: UIViewController {
         getItemsForCategory("전체")
         displayedItems = TodoDataManager.shared.todoItems
     }
-    
+
     // MARK: - Helper
-    
+
     private func configureNav() {
         let navigationBarAppearance = UINavigationBarAppearance().then {
             $0.configureWithOpaqueBackground()
             $0.backgroundColor = .white
             $0.shadowColor = nil
         }
-        
+
         navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.compactAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-        
+
         let logoImage = UIImage(named: "logo.png")
         let logoImageView = UIImageView(image: logoImage)
         logoImageView.contentMode = .scaleAspectFit
@@ -82,7 +82,7 @@ final class TodoListViewController: UIViewController {
         container.addSubview(logoImageView)
         navigationItem.titleView = container
     }
-    
+
     private func configureCategoryLabels() {
         let categories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
         let categoryLabels = categories.map { category -> UIView in
@@ -95,25 +95,24 @@ final class TodoListViewController: UIViewController {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(categoryTapped(_:)))
             label.addGestureRecognizer(tapGesture)
             label.isUserInteractionEnabled = true
-            
+
             label.snp.makeConstraints {
                 $0.width.greaterThanOrEqualTo(60)
             }
-            
+
             return label
         }
         categoryStackView.distribution = .fillEqually
         categoryLabels.forEach { categoryStackView.addArrangedSubview($0) }
     }
 
-    
     private func configureUI() {
-        view.addSubviews(listTableView,categoryScrollView,todoAddButton)
+        view.addSubviews(listTableView, categoryScrollView, todoAddButton)
         categoryScrollView.addSubview(categoryStackView)
-        
+
         listTableView.delegate = self
         listTableView.dataSource = self
-        
+
         configureCategoryLabels()
 
         categoryScrollView.snp.makeConstraints {
@@ -137,7 +136,7 @@ final class TodoListViewController: UIViewController {
             $0.leading.equalTo(view.snp.leading)
             $0.trailing.equalTo(view.snp.trailing)
         }
-        
+
         todoAddButton.snp.makeConstraints {
             $0.width.equalTo(45)
             $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
@@ -145,7 +144,7 @@ final class TodoListViewController: UIViewController {
             $0.height.equalTo(45)
         }
     }
-    
+
     private func updateCategories(_ categories: [String]) {
         categoryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -169,7 +168,7 @@ final class TodoListViewController: UIViewController {
 
         categoryLabels.forEach { categoryStackView.addArrangedSubview($0) }
 
-        barColor.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
+        barColor.backgroundColor = Constant.appColor
         categoryScrollView.addSubview(barColor)
         barColor.snp.makeConstraints {
             $0.bottom.equalTo(categoryScrollView.snp.bottom)
@@ -178,7 +177,7 @@ final class TodoListViewController: UIViewController {
             $0.trailing.equalTo(categoryStackView.arrangedSubviews.first!.snp.trailing)
         }
     }
-    
+
     func getItemsForCategory(_ category: String) {
         if category == "전체" {
             displayedItems = TodoDataManager.shared.todoItems
@@ -196,7 +195,7 @@ final class TodoListViewController: UIViewController {
     }
 
     // MARK: - Actions
-    
+
     @objc private func categoryTapped(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         guard label.text != nil else { return }
@@ -228,7 +227,7 @@ final class TodoListViewController: UIViewController {
     @objc private func todoAddButtonTapped() {
         let addTodoVC = TodoAddViewController()
         addTodoVC.delegate = self
-        
+
         let navigationController = UINavigationController(rootViewController: addTodoVC)
         navigationController.modalPresentationStyle = .pageSheet
         let sheet = navigationController.presentationController as? UISheetPresentationController
@@ -240,7 +239,6 @@ final class TodoListViewController: UIViewController {
         }
         present(navigationController, animated: true, completion: nil)
     }
-
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -249,7 +247,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return displayedItems.count == TodoDataManager.shared.todoItems.count ? sections.count : 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if displayedItems.count == TodoDataManager.shared.todoItems.count {
             let category = Array(sections.keys)[section]
@@ -301,9 +299,9 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
-    
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
             let _ = self.todoItems[indexPath.row]
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
             TodoDataManager.shared.saveTodoItems()
@@ -317,7 +315,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let completeAction = UIContextualAction(style: .normal, title: nil) { (action, view, completionHandler) in
+        let completeAction = UIContextualAction(style: .normal, title: nil) { _, _, completionHandler in
             let completedItem = self.todoItems[indexPath.row]
             TodoDataManager.shared.completedItems.append(completedItem)
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
@@ -334,7 +332,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editVC = TodoEditViewController()
         editVC.delegate = self
@@ -353,7 +351,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             sheet?.selectedDetentIdentifier = .medium
         }
         present(navigationController, animated: true, completion: nil)
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

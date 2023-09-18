@@ -8,10 +8,9 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        self.setupTabBar()
     }
 
     private func setupTabBar() {
@@ -36,5 +35,4 @@ class TabBarController: UITabBarController {
 
         viewControllers = tabBarList
     }
-
 }

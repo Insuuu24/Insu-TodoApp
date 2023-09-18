@@ -86,11 +86,11 @@ class TodoListCell: UITableViewCell {
     // MARK: - Configure
     
     func configure(with item: TodoItem) {
-        self.categoryBadge.text = item.category
-        self.todoLabel.text = item.content
+        categoryBadge.text = item.category
+        todoLabel.text = item.content
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        self.dateLabel.text = formatter.string(from: item.date)
+        dateLabel.text = formatter.string(from: item.date)
     }
 }

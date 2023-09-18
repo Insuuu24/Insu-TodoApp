@@ -35,7 +35,7 @@ class DatePickerPopupView: UIView {
         fatalError("")
     }
     
-    // MARK: - Setup Layout
+    // MARK: - Helpers
     
     private func setupLayout() {
         let contentView = UIView().then {
@@ -72,7 +72,7 @@ class DatePickerPopupView: UIView {
         }
     }
 
-    // MARK: - Method & Action
+    // MARK: - Actions
     
     @objc private func handleDone() {
         onSelectDate?(datePicker.date)
