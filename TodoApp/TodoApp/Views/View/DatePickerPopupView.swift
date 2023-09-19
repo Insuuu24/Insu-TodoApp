@@ -24,7 +24,7 @@ class DatePickerPopupView: UIView {
     var onSelectDate: ((Date) -> Void)?
     var onCancel: (() -> Void)?
     
-    // MARK: - Initialization
+    // MARK: - LifeCycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

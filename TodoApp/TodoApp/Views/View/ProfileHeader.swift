@@ -9,13 +9,12 @@ import UIKit
 import Then
 import SnapKit
 
-
-class ProfileHeader: UICollectionReusableView {
+final class ProfileHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
     let usernameLabel = UILabel().then {
-        $0.text = "in_suuu"
+        $0.text = "in_suuu___"
         $0.font = UIFont.boldSystemFont(ofSize: 18)
     }
     
@@ -72,11 +71,10 @@ class ProfileHeader: UICollectionReusableView {
         $0.backgroundColor = .white
         $0.tintColor = .black
         $0.layer.cornerRadius = 5
-        $0.layer.borderWidth = 1
+        $0.layer.borderWidth = 0.5
         $0.layer.borderColor = UIColor.black.cgColor
     }
 
-    
     private let buttonsStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillProportionally
@@ -87,6 +85,33 @@ class ProfileHeader: UICollectionReusableView {
         $0.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.00)
     }
     
+    private lazy var gridButton = UIButton().then {
+        let gridBtn = UIImage(systemName: "squareshape.split.3x3")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch)
+        $0.setImage(gridBtn, for: .normal)
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(gridBtnTapped), for: .touchUpInside)
+    }
+    
+    private lazy var listButton = UIButton().then {
+        let listBtn = UIImage(systemName: "list.bullet")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch)
+        $0.setImage(listBtn, for: .normal)
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(listBtnTapped), for: .touchUpInside)
+    }
+    
+    private lazy var newButton = UIButton().then {
+        let newBtn = UIImage(systemName: "plus.rectangle")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch)
+        $0.setImage(newBtn, for: .normal)
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(newBtnTapped), for: .touchUpInside)
+    }
+    
+    private let buttonsContainer = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 8
+    }
+
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -106,10 +131,11 @@ class ProfileHeader: UICollectionReusableView {
     // MARK: - Helpers
     
     private func setupLayout() {
-        addSubviews(usernameLabel, profileImageView, bioLabel, stackView, buttonsStackView, borderView)
+        addSubviews(usernameLabel, profileImageView, bioLabel, stackView, buttonsStackView, borderView, buttonsContainer)
         stackView.addArrangedSubviews(postsLabel, followersLabel, followingLabel)
         buttonsStackView.addArrangedSubviews(followButton, followingButton, moreButton)
-        
+        buttonsContainer.addArrangedSubviews(gridButton, listButton, newButton)
+
         usernameLabel.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.centerX.equalTo(self)
@@ -128,13 +154,13 @@ class ProfileHeader: UICollectionReusableView {
         }
         
         bioLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(10)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(16)
             $0.leading.equalTo(self).offset(16)
             $0.trailing.equalTo(self).offset(-16)
         }
         
         buttonsStackView.snp.makeConstraints {
-            $0.top.equalTo(bioLabel.snp.bottom).offset(10)
+            $0.top.equalTo(bioLabel.snp.bottom).offset(16)
             $0.leading.equalTo(self).offset(16)
             $0.trailing.equalTo(self).offset(-16)
             $0.height.equalTo(30)
@@ -147,10 +173,18 @@ class ProfileHeader: UICollectionReusableView {
         moreButton.snp.makeConstraints {
             $0.width.height.equalTo(30)
         }
+        
         borderView.snp.makeConstraints {
-            $0.top.equalTo(buttonsStackView.snp.bottom).offset(10)
+            $0.top.equalTo(buttonsStackView.snp.bottom).offset(16)
             $0.leading.trailing.equalTo(self)
             $0.height.equalTo(0.5)
+        }
+        
+        buttonsContainer.snp.makeConstraints {
+            $0.top.equalTo(borderView.snp.bottom).offset(10)
+            $0.leading.equalTo(self).offset(16)
+            $0.trailing.equalTo(self).offset(-16)
+            $0.height.equalTo(30)
         }
     }
     
@@ -161,8 +195,8 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     private func setupBioLabel() {
-        let bioText = NSMutableAttributedString(string: "인수인수\niOS Developer 🍎\n", attributes: [.font: UIFont.systemFont(ofSize: 14)])
-        bioText.append(NSAttributedString(string: "Insu's Github", attributes: [.font: UIFont.systemFont(ofSize: 12), .foregroundColor: UIColor.blue]))
+        let bioText = NSMutableAttributedString(string: "인수인수\niOS Developer 🍎\n", attributes: [.font: UIFont.systemFont(ofSize: 16)])
+        bioText.append(NSAttributedString(string: "Insu's Github", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.blue]))
         bioLabel.attributedText = bioText
     }
     
@@ -172,5 +206,17 @@ class ProfileHeader: UICollectionReusableView {
         if let githubUrl = URL(string: "https://github.com/Insuuu24") {
             UIApplication.shared.open(githubUrl)
         }
+    }
+    
+    @objc func gridBtnTapped() {
+        print("gridButtonTapped")
+    }
+
+    @objc func listBtnTapped() {
+        print("listButtonTapped")
+    }
+
+    @objc func newBtnTapped() {
+        print("newButtonTapped")
     }
 }

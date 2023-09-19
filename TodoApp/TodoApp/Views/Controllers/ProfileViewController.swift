@@ -10,7 +10,7 @@ import Then
 import SnapKit
 import SwiftUI
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -31,7 +31,6 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         
         setupLayout()
-        
         
         collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ProfileHeader")
     }
