@@ -3,7 +3,7 @@ import Then
 import SnapKit
 
 protocol TodoAddViewControllerDelegate: AnyObject {
-    func didAddTodoItem(_ item: TodoItem)
+    func didAddTodoItem(_ item: TodoData)
 }
 
 final class TodoAddViewController: UIViewController {
@@ -222,14 +222,17 @@ final class TodoAddViewController: UIViewController {
         guard let content = todoTextField.text, !content.isEmpty,
               let category = selectedCategory,
               let date = selectedDate
-        else {
-            return
-        }
+        else { return }
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
 
-        let todoItem = TodoItem(content: content, category: category, date: date)
+        let todoItem = TodoData(context: context)
+        todoItem.content = content
+        todoItem.category = category
+        todoItem.date = date
         
         delegate?.didAddTodoItem(todoItem)
-        
         dismiss(animated: true, completion: nil)
     }
 }

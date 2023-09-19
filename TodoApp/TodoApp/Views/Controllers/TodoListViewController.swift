@@ -6,13 +6,13 @@ final class TodoListViewController: UIViewController {
 
     // MARK: - Properties
 
-    var todoItems: [TodoItem] {
+    var todoItems: [TodoData] {
         get { return TodoDataManager.shared.todoItems }
         set { TodoDataManager.shared.todoItems = newValue }
     }
 
-    var displayedItems: [TodoItem] = []
-    var sections: [String: [TodoItem]] = [:]
+    var displayedItems: [TodoData] = []
+    var sections: [String: [TodoData]] = [:]
     var todayCategories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
     private let barColor = UIView()
 
@@ -359,7 +359,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - TodoAddViewControllerDelegate
 
 extension TodoListViewController: TodoAddViewControllerDelegate {
-    func didAddTodoItem(_ item: TodoItem) {
+    func didAddTodoItem(_ item: TodoData) {
         TodoDataManager.shared.todoItems.append(item)
         TodoDataManager.shared.saveTodoItems()
         getItemsForCategory("전체")
@@ -370,7 +370,7 @@ extension TodoListViewController: TodoAddViewControllerDelegate {
 // MARK: - TodoEditViewControllerDelegate
 
 extension TodoListViewController: TodoEditViewControllerDelegate {
-    func didUpdateTodoItem(_ item: TodoItem, at index: Int) {
+    func didUpdateTodoItem(_ item: TodoData, at index: Int) {
         TodoDataManager.shared.todoItems[index] = item
         TodoDataManager.shared.saveTodoItems()
         getItemsForCategory("전체")

@@ -3,7 +3,7 @@ import Then
 import SnapKit
 
 protocol TodoEditViewControllerDelegate: AnyObject {
-    func didUpdateTodoItem(_ item: TodoItem, at index: Int)
+    func didUpdateTodoItem(_ item: TodoData, at index: Int)
 }
 
 final class TodoEditViewController: UIViewController {
@@ -11,7 +11,7 @@ final class TodoEditViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: TodoEditViewControllerDelegate?
-    var selectedTodoItem: TodoItem?
+    var selectedTodoItem: TodoData?
     var selectedIndex: Int?
     private var selectedDate: Date?
     private var selectedCategory: String?
@@ -250,9 +250,16 @@ final class TodoEditViewController: UIViewController {
               let index = selectedIndex
         else { return }
 
-        let updatedTodoItem = TodoItem(content: content, category: category, date: date)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+
+        let updatedTodoItem = TodoData(context: context)
+        updatedTodoItem.content = content
+        updatedTodoItem.category = category
+        updatedTodoItem.date = date
+
         delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
-        navigationController?.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 

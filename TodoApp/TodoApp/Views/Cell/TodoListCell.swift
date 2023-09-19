@@ -85,7 +85,7 @@ class TodoListCell: UITableViewCell {
 
     // MARK: - Configure
     
-    func configure(with item: TodoItem) {
+    func configure(with item: TodoData) {
         categoryBadge.text = item.category
         todoLabel.text = item.content
         
