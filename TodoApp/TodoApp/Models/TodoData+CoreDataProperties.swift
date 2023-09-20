@@ -1,6 +1,6 @@
 //
 //  TodoData+CoreDataProperties.swift
-//  
+//
 //
 //  Created by Insu on 2023/09/19.
 //
@@ -9,15 +9,13 @@
 import Foundation
 import CoreData
 
+public extension TodoData {
 
-extension TodoData {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<TodoData> {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<TodoData> {
         return NSFetchRequest<TodoData>(entityName: "TodoData")
     }
 
-    @NSManaged public var content: String
-    @NSManaged public var category: String
-    @NSManaged public var date: Date
-
+    @NSManaged var content: String
+    @NSManaged var category: String
+    @NSManaged var date: Date
 }

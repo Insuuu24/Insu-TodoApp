@@ -83,6 +83,8 @@ class PetViewController: UIViewController {
         }
     }
     
+    // MARK: - Actions
+    
     @objc private func fetchRandomCatImage() {
         catImageView.image = UIImage(named: "placeholder")
         activityIndicator.startAnimating()

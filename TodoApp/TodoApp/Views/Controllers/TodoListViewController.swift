@@ -319,6 +319,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
             let completedItem = self.todoItems[indexPath.row]
             TodoDataManager.shared.completedItems.append(completedItem)
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
+            TodoDataManager.shared.saveTodoItems()
+            TodoDataManager.shared.saveCompletedItems()
 
             self.getItemsForCategory("전체")
             tableView.reloadData()

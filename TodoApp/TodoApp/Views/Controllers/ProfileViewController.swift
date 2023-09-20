@@ -6,13 +6,15 @@
 //
 
 import UIKit
-import Then
 import SnapKit
-import SwiftUI
 
 final class ProfileViewController: UIViewController {
     
     // MARK: - Properties
+    
+    private let arrayImages = ["atob", "busan", "takeashot", "westernchapter1", "westernchapter", "healing", "snow", "busan1", "busan2", "cafe", "gallery", "gallery1"]
+    
+    private let profileHeader = ProfileHeader()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -30,9 +32,7 @@ final class ProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        setupLayout()
-        
-        collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ProfileHeader")
+        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,17 +47,23 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func setupLayout() {
-        view.addSubview(collectionView)
+    private func configureUI() {
+        view.addSubviews(profileHeader, collectionView)
         
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        profileHeader.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view)
+            $0.height.equalTo(300)
+        }
+        
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalTo(view)
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(profileHeader.snp.bottom)
             $0.bottom.equalTo(view)
         }
     }
@@ -67,33 +73,23 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return arrayImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .lightGray
+        
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.size.width, height: cell.frame.size.height))
+        imageView.image = UIImage(named: arrayImages[indexPath.row])
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        cell.addSubview(imageView)
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 2) / 3
         return CGSize(width: width, height: width)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeader
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 300)
-    }
-}
-
-struct VCPreView: PreviewProvider {
-
-    static var previews: some View {
-        ProfileViewController().toPreview()
     }
 }

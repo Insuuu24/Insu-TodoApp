@@ -13,12 +13,12 @@ final class ProfileHeader: UICollectionReusableView {
     
     // MARK: - Properties
     
-    let usernameLabel = UILabel().then {
+    private let usernameLabel = UILabel().then {
         $0.text = "in_suuu___"
         $0.font = UIFont.boldSystemFont(ofSize: 18)
     }
     
-    let profileImageView = UIImageView().then {
+    private let profileImageView = UIImageView().then {
         $0.image = UIImage(named: "insuEmoji.jpg")
         $0.layer.cornerRadius = 40
         $0.clipsToBounds = true
@@ -50,6 +50,14 @@ final class ProfileHeader: UICollectionReusableView {
     private let bioLabel = UILabel().then {
         $0.text = ""
         $0.numberOfLines = 0
+    }
+    
+    private lazy var gitHubButton = UIButton().then {
+        $0.setTitle("Insu's GitHub", for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        $0.setTitleColor(Constant.appColor, for: .normal)
+        $0.contentHorizontalAlignment = .left
+        $0.addTarget(self, action: #selector(openGithub), for: .touchUpInside)
     }
     
     private let followButton = UIButton().then {
@@ -109,19 +117,19 @@ final class ProfileHeader: UICollectionReusableView {
     private let buttonsContainer = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
-        $0.spacing = 8
+        $0.spacing = 10
+    }
+    
+    private let barColor = UIView().then {
+        $0.backgroundColor = Constant.appColor
     }
 
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        configureUI()
         setupBioLabel()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openGithub))
-        bioLabel.addGestureRecognizer(tapGesture)
-        bioLabel.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -130,8 +138,8 @@ final class ProfileHeader: UICollectionReusableView {
     
     // MARK: - Helpers
     
-    private func setupLayout() {
-        addSubviews(usernameLabel, profileImageView, bioLabel, stackView, buttonsStackView, borderView, buttonsContainer)
+    private func configureUI() {
+        addSubviews(usernameLabel, profileImageView, bioLabel, gitHubButton, stackView, buttonsStackView, borderView, buttonsContainer, barColor)
         stackView.addArrangedSubviews(postsLabel, followersLabel, followingLabel)
         buttonsStackView.addArrangedSubviews(followButton, followingButton, moreButton)
         buttonsContainer.addArrangedSubviews(gridButton, listButton, newButton)
@@ -149,8 +157,8 @@ final class ProfileHeader: UICollectionReusableView {
         
         stackView.snp.makeConstraints {
             $0.centerY.equalTo(profileImageView)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(28)
-            $0.trailing.equalTo(self).offset(-28)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(30)
+            $0.trailing.equalTo(self).offset(-30)
         }
         
         bioLabel.snp.makeConstraints {
@@ -159,8 +167,15 @@ final class ProfileHeader: UICollectionReusableView {
             $0.trailing.equalTo(self).offset(-16)
         }
         
+        gitHubButton.snp.makeConstraints {
+            $0.top.equalTo(bioLabel.snp.bottom).offset(2)
+            $0.leading.equalTo(self).offset(16)
+            $0.trailing.equalTo(self).offset(-16)
+            $0.height.equalTo(20)
+        }
+        
         buttonsStackView.snp.makeConstraints {
-            $0.top.equalTo(bioLabel.snp.bottom).offset(16)
+            $0.top.equalTo(gitHubButton.snp.bottom).offset(14)
             $0.leading.equalTo(self).offset(16)
             $0.trailing.equalTo(self).offset(-16)
             $0.height.equalTo(30)
@@ -186,6 +201,11 @@ final class ProfileHeader: UICollectionReusableView {
             $0.trailing.equalTo(self).offset(-16)
             $0.height.equalTo(30)
         }
+        
+        barColor.snp.makeConstraints {
+            $0.height.equalTo(3)
+            $0.leading.equalTo(<#T##other: ConstraintRelatableTarget##ConstraintRelatableTarget#>)
+        }
     }
     
     private func attributedStatText(value: Int, label: String) -> NSAttributedString {
@@ -195,17 +215,18 @@ final class ProfileHeader: UICollectionReusableView {
     }
     
     private func setupBioLabel() {
-        let bioText = NSMutableAttributedString(string: "인수인수\niOS Developer 🍎\n", attributes: [.font: UIFont.systemFont(ofSize: 16)])
-        bioText.append(NSAttributedString(string: "Insu's Github", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.blue]))
+        let bioText = NSMutableAttributedString(string: "인수인수\n", attributes: [.font: UIFont.systemFont(ofSize: 16)])
+        bioText.append(NSAttributedString(string: "iOS Developer 🍎", attributes: [.font: UIFont.systemFont(ofSize: 16)]))
         bioLabel.attributedText = bioText
     }
     
     // MARK: - Actions
     
     @objc func openGithub() {
-        if let githubUrl = URL(string: "https://github.com/Insuuu24") {
-            UIApplication.shared.open(githubUrl)
+        guard let githubUrl = URL(string: "https://github.com/Insuuu24") else {
+            return
         }
+        UIApplication.shared.open(githubUrl)
     }
     
     @objc func gridBtnTapped() {
