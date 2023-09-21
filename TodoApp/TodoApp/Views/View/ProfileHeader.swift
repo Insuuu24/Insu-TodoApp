@@ -25,7 +25,7 @@ final class ProfileHeader: UICollectionReusableView {
     }
     
     private lazy var postsLabel = UILabel().then {
-        $0.attributedText = attributedStatText(value: 0, label: "post")
+        $0.attributedText = attributedStatText(value: 12, label: "post")
         $0.textAlignment = .center
         $0.numberOfLines = 0
     }
@@ -79,8 +79,8 @@ final class ProfileHeader: UICollectionReusableView {
         $0.backgroundColor = .white
         $0.tintColor = .black
         $0.layer.cornerRadius = 5
-        $0.layer.borderWidth = 0.5
-        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.lightGray.cgColor
     }
 
     private let buttonsStackView = UIStackView().then {
@@ -103,14 +103,14 @@ final class ProfileHeader: UICollectionReusableView {
     private lazy var listButton = UIButton().then {
         let listBtn = UIImage(systemName: "list.bullet")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch)
         $0.setImage(listBtn, for: .normal)
-        $0.tintColor = .black
+        $0.tintColor = .lightGray
         $0.addTarget(self, action: #selector(listBtnTapped), for: .touchUpInside)
     }
     
     private lazy var newButton = UIButton().then {
         let newBtn = UIImage(systemName: "plus.rectangle")?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch)
         $0.setImage(newBtn, for: .normal)
-        $0.tintColor = .black
+        $0.tintColor = .lightGray
         $0.addTarget(self, action: #selector(newBtnTapped), for: .touchUpInside)
     }
     
@@ -197,14 +197,16 @@ final class ProfileHeader: UICollectionReusableView {
         
         buttonsContainer.snp.makeConstraints {
             $0.top.equalTo(borderView.snp.bottom).offset(10)
-            $0.leading.equalTo(self).offset(16)
-            $0.trailing.equalTo(self).offset(-16)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(30)
         }
         
         barColor.snp.makeConstraints {
+            $0.bottom.equalTo(self)
             $0.height.equalTo(3)
-            $0.leading.equalTo(<#T##other: ConstraintRelatableTarget##ConstraintRelatableTarget#>)
+            $0.centerX.equalTo(gridButton)
+            $0.width.equalTo(gridButton).multipliedBy(1)
         }
     }
     
@@ -220,6 +222,12 @@ final class ProfileHeader: UICollectionReusableView {
         bioLabel.attributedText = bioText
     }
     
+    private func animateBarColor() {
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
+    }
+    
     // MARK: - Actions
     
     @objc func openGithub() {
@@ -230,14 +238,41 @@ final class ProfileHeader: UICollectionReusableView {
     }
     
     @objc func gridBtnTapped() {
-        print("gridButtonTapped")
+        gridButton.tintColor = .black
+        listButton.tintColor = .lightGray
+        newButton.tintColor = .lightGray
+        barColor.snp.remakeConstraints {
+            $0.bottom.equalTo(self)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(gridButton)
+            $0.width.equalTo(gridButton).multipliedBy(1)
+        }
+        animateBarColor()
     }
 
     @objc func listBtnTapped() {
-        print("listButtonTapped")
+        gridButton.tintColor = .lightGray
+        listButton.tintColor = .black
+        newButton.tintColor = .lightGray
+        barColor.snp.remakeConstraints {
+            $0.bottom.equalTo(self)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(listButton)
+            $0.width.equalTo(listButton).multipliedBy(1)
+        }
+        animateBarColor()
     }
 
     @objc func newBtnTapped() {
-        print("newButtonTapped")
+        gridButton.tintColor = .lightGray
+        listButton.tintColor = .lightGray
+        newButton.tintColor = .black
+        barColor.snp.remakeConstraints {
+            $0.bottom.equalTo(self)
+            $0.height.equalTo(3)
+            $0.centerX.equalTo(newButton)
+            $0.width.equalTo(newButton).multipliedBy(1)
+        }
+        animateBarColor()
     }
 }

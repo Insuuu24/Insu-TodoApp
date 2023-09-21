@@ -87,8 +87,11 @@ final class HomeViewController: UIViewController {
             guard let self = self else { return }
             let tabBarController = TabBarController()
             tabBarController.selectedIndex = 0
-            self.view.window?.rootViewController = tabBarController
-            self.view.window?.makeKeyAndVisible()
+            
+            UIView.transition(with: self.view.window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                self.view.window?.rootViewController = tabBarController
+                self.view.window?.makeKeyAndVisible()
+            }, completion: nil)
         }
 
         let randomCatAction = UIAction(title: "고앵이 사진 보러가기", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil) { [weak self] _ in
