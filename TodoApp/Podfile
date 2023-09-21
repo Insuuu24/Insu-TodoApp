@@ -8,4 +8,5 @@ target 'TodoApp' do
   # Pods for TodoApp
   pod 'Then'
   pod 'SnapKit'
+  pod 'Kingfisher'
 end

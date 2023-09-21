@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class TodoDataManager {
     static let shared = TodoDataManager()
@@ -10,32 +11,42 @@ class TodoDataManager {
     private let todoItemsKey = "todoItems"
     private let completedItemsKey = "completedItems"
     
-    var todoItems: [TodoItem] = []
-    var completedItems: [TodoItem] = []
+    var todoItems: [TodoData] = []
+    var completedItems: [TodoData] = []
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func saveTodoItems() {
-        if let encodedData = try? JSONEncoder().encode(todoItems) {
-            UserDefaults.standard.set(encodedData, forKey: todoItemsKey)
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
         }
     }
     
-    func loadTodoItems() {
-        if let savedData = UserDefaults.standard.data(forKey: todoItemsKey),
-            let decodedData = try? JSONDecoder().decode([TodoItem].self, from: savedData) {
-            todoItems = decodedData
+    func loadTodoItems(with request: NSFetchRequest<TodoData> = TodoData.fetchRequest()) {
+        do {
+            todoItems = try context.fetch(request)
+            print("Loaded todo items count: \(todoItems.count)")
+        } catch {
+            print("Error fetching data from context \(error)")
         }
     }
     
     func saveCompletedItems() {
-        if let encodedData = try? JSONEncoder().encode(completedItems) {
-            UserDefaults.standard.set(encodedData, forKey: completedItemsKey)
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context \(error)")
         }
     }
     
-    func loadCompletedItems() {
-        if let savedData = UserDefaults.standard.data(forKey: completedItemsKey),
-            let decodedData = try? JSONDecoder().decode([TodoItem].self, from: savedData) {
-            completedItems = decodedData
+    func loadCompletedItems(with request: NSFetchRequest<TodoData> = TodoData.fetchRequest()) {
+        do {
+            completedItems = try context.fetch(request)
+            print("Loaded completed items count: \(completedItems.count)")
+        } catch {
+            print("Error fetching data from context \(error)")
         }
     }
 }
