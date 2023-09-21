@@ -26,5 +26,8 @@
 | ------------------- | ------------------------ | ------------------------------------------------------------ |
 | SnapKit             | 오토레이아웃             | ![SnapKit](https://img.shields.io/badge/SnapKit-5.6.0-skyblue) |
 | Then                | 짧은 코드 처리           | ![Then](https://img.shields.io/badge/Then-3.0.0-white) |
+| KingFisher          | 이미지 캐싱              | ![Kingfisher](https://img.shields.io/badge/Kingfisher-7.9.1-orange)
+
+<br>
 
 ## ⛓️ Architecture Pattern (MVVM)
