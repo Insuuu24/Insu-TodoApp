@@ -27,6 +27,7 @@ class TodoDataManager {
     func loadTodoItems(with request: NSFetchRequest<TodoData> = TodoData.fetchRequest()) {
         do {
             todoItems = try context.fetch(request)
+            print("Loaded todo items count: \(todoItems.count)")
         } catch {
             print("Error fetching data from context \(error)")
         }
@@ -43,6 +44,7 @@ class TodoDataManager {
     func loadCompletedItems(with request: NSFetchRequest<TodoData> = TodoData.fetchRequest()) {
         do {
             completedItems = try context.fetch(request)
+            print("Loaded completed items count: \(completedItems.count)")
         } catch {
             print("Error fetching data from context \(error)")
         }

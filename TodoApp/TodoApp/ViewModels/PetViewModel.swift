@@ -39,7 +39,8 @@ final class PetViewModel {
             do {
                 guard let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]],
                       let petImageUrlString = jsonArray.first?["url"] as? String,
-                      let petImageUrl = URL(string: petImageUrlString) else {
+                      let petImageUrl = URL(string: petImageUrlString)
+                else {
                     return
                 }
                 

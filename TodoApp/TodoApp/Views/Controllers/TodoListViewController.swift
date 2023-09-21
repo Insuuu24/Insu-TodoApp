@@ -302,7 +302,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            let _ = self.todoItems[indexPath.row]
+            let itemToDelete = self.todoItems[indexPath.row]
+            TodoDataManager.shared.context.delete(itemToDelete)
             TodoDataManager.shared.todoItems.remove(at: indexPath.row)
             TodoDataManager.shared.saveTodoItems()
 

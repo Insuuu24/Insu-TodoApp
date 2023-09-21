@@ -247,18 +247,22 @@ final class TodoEditViewController: UIViewController {
               let content = todoTextField.text,
               let date = selectedDate,
               let category = selectedCategory,
-              let index = selectedIndex
+              let item = selectedTodoItem
         else { return }
+        
+        item.content = content
+        item.category = category
+        item.date = date
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
+        do {
+            try context.save()
+        } catch {
+            print("Error saving updated todo item: \(error)")
+        }
 
-        let updatedTodoItem = TodoData(context: context)
-        updatedTodoItem.content = content
-        updatedTodoItem.category = category
-        updatedTodoItem.date = date
-
-        delegate?.didUpdateTodoItem(updatedTodoItem, at: index)
+        delegate?.didUpdateTodoItem(item, at: selectedIndex ?? 0)
         dismiss(animated: true, completion: nil)
     }
 }

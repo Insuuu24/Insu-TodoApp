@@ -80,8 +80,10 @@ extension TodoCompleteViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+            tableView.beginUpdates()
             TodoDataManager.shared.completedItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
