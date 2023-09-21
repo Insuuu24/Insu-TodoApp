@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class PetViewController: UIViewController {
+final class PetViewController: UIViewController {
     
     // MARK: - Properties
     

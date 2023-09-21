@@ -22,6 +22,7 @@ final class ProfileViewController: UIViewController {
         layout.minimumLineSpacing = 1
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return collectionView
     }()
     
@@ -49,8 +50,6 @@ final class ProfileViewController: UIViewController {
     
     private func configureUI() {
         view.addSubviews(profileHeader, collectionView)
-        
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         collectionView.dataSource = self
         collectionView.delegate = self

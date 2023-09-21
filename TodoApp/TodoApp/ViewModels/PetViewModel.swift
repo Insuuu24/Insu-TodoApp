@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class PetViewModel {
     
@@ -44,19 +45,15 @@ final class PetViewModel {
                     return
                 }
                 
-                URLSession.shared.dataTask(with: petImageUrl) { data, _, error in
-                    if let error = error {
+                KingfisherManager.shared.retrieveImage(with: petImageUrl, options: nil, progressBlock: nil, completionHandler: { result in
+                    switch result {
+                    case .success(let value):
+                        self.catImage = value.image
+                        completion(.success(value.image))
+                    case .failure(let error):
                         completion(.failure(error))
-                        return
                     }
-                    
-                    guard let data = data, let image = UIImage(data: data) else {
-                        return
-                    }
-                    
-                    self.catImage = image
-                    completion(.success(image))
-                }.resume()
+                })
                 
             } catch let jsonError {
                 completion(.failure(jsonError))

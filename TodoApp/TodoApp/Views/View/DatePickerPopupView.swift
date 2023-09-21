@@ -2,7 +2,7 @@ import UIKit
 import Then
 import SnapKit
 
-class DatePickerPopupView: UIView {
+final class DatePickerPopupView: UIView {
     
     // MARK: - Properties
     
