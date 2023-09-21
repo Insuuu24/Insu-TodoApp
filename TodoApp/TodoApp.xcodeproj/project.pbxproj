@@ -20,6 +20,7 @@
 		EB3A97EA2AA0DF50009821F5 /* completed-Todo.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97E92AA0DF50009821F5 /* completed-Todo.png */; };
 		EB3A97EE2AA100B3009821F5 /* clickMe.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3A97ED2AA100B3009821F5 /* clickMe.png */; };
 		EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */; };
+		EB5302C72ABC710C00EC615E /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5302C62ABC710C00EC615E /* TodoListViewModel.swift */; };
 		EB726E732A86771200FA7A1F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB726E722A86771200FA7A1F /* Extensions.swift */; };
 		EB76EACB2A80C16100D57868 /* DatePickerPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */; };
 		EB8E32332ABADF8900D6D012 /* westernchapter1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8E322A2ABADF8700D6D012 /* westernchapter1.png */; };
@@ -47,6 +48,8 @@
 		EBABFB662A7FBE8D00BAB00E /* TodoAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */; };
 		EBCFDEA22AB7435100B9AA27 /* PetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */; };
 		EBF2373C2A83A24D0059A5D1 /* TodoDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF2373B2A83A24D0059A5D1 /* TodoDataManager.swift */; };
+		EBF53D412ABC93EF0024CB4B /* TodoAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF53D402ABC93EF0024CB4B /* TodoAddViewModel.swift */; };
+		EBF53D432ABC977D0024CB4B /* TodoEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF53D422ABC977D0024CB4B /* TodoEditViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +68,7 @@
 		EB3A97E92AA0DF50009821F5 /* completed-Todo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "completed-Todo.png"; sourceTree = "<group>"; };
 		EB3A97ED2AA100B3009821F5 /* clickMe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clickMe.png; sourceTree = "<group>"; };
 		EB3C49FC2A81D41300F4B291 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
+		EB5302C62ABC710C00EC615E /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
 		EB726E722A86771200FA7A1F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EB76EACA2A80C16100D57868 /* DatePickerPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerPopupView.swift; sourceTree = "<group>"; };
 		EB8E322A2ABADF8700D6D012 /* westernchapter1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = westernchapter1.png; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 		EBABFB652A7FBE8D00BAB00E /* TodoAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAddViewController.swift; sourceTree = "<group>"; };
 		EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewModel.swift; sourceTree = "<group>"; };
 		EBF2373B2A83A24D0059A5D1 /* TodoDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDataManager.swift; sourceTree = "<group>"; };
+		EBF53D402ABC93EF0024CB4B /* TodoAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAddViewModel.swift; sourceTree = "<group>"; };
+		EBF53D422ABC977D0024CB4B /* TodoEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEditViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +134,10 @@
 		EB3228AC2AB47C8F00B8A571 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				EB5302C62ABC710C00EC615E /* TodoListViewModel.swift */,
+				EBF53D402ABC93EF0024CB4B /* TodoAddViewModel.swift */,
 				EBCFDEA12AB7435100B9AA27 /* PetViewModel.swift */,
+				EBF53D422ABC977D0024CB4B /* TodoEditViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -405,10 +414,13 @@
 				EBABFB662A7FBE8D00BAB00E /* TodoAddViewController.swift in Sources */,
 				EB14A9E52AB9678C003DEA7D /* TodoData+CoreDataProperties.swift in Sources */,
 				EB14A9DD2AB96211003DEA7D /* TodoData.xcdatamodeld in Sources */,
+				EBF53D412ABC93EF0024CB4B /* TodoAddViewModel.swift in Sources */,
 				EB726E732A86771200FA7A1F /* Extensions.swift in Sources */,
 				EBABFB622A7F8D0600BAB00E /* TodoCompleteViewController.swift in Sources */,
+				EBF53D432ABC977D0024CB4B /* TodoEditViewModel.swift in Sources */,
 				EB3C49FD2A81D41300F4B291 /* TodoListCell.swift in Sources */,
 				EB3228A92AB3DEE900B8A571 /* TabBarController.swift in Sources */,
+				EB5302C72ABC710C00EC615E /* TodoListViewModel.swift in Sources */,
 				EB3228AB2AB3E06900B8A571 /* ProfileViewController.swift in Sources */,
 				EBABFB4B2A7F73EC00BAB00E /* SceneDelegate.swift in Sources */,
 				EB1C38542A84C302006AA4CC /* TodoEditViewController.swift in Sources */,

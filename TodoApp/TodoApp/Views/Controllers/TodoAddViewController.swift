@@ -11,9 +11,7 @@ final class TodoAddViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: TodoAddViewControllerDelegate?
-    private var selectedDate: Date?
-    private var selectedCategory: String?
-    private let categories = ["과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
+    private let viewModel = TodoAddViewModel()
     private var categoryButtons: [UIButton] = []
     
     private let todoHeaderLabel = UILabel().then {
@@ -99,7 +97,7 @@ final class TodoAddViewController: UIViewController {
     }
     
     private func configureCategoryButtons() {
-        for (index, category) in categories.enumerated() {
+        for (index, category) in viewModel.categories.enumerated() {
             let button = UIButton(type: .system)
             button.setTitle(category, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -170,12 +168,8 @@ final class TodoAddViewController: UIViewController {
         todoTextField.leftViewMode = .always
     }
 
-    private func isFormComplete() -> Bool {
-        return selectedCategory != nil && selectedDate != nil && !(todoTextField.text?.isEmpty ?? true)
-    }
-
     private func updateSaveButtonState() {
-        if isFormComplete() {
+        if viewModel.isFormComplete(content: todoTextField.text) {
             saveButton.backgroundColor = Constant.appColor
             saveButton.isEnabled = true
         } else {
@@ -193,7 +187,7 @@ final class TodoAddViewController: UIViewController {
         }
         sender.backgroundColor = Constant.appColor
         sender.setTitleColor(.white, for: .normal)
-        selectedCategory = categories[sender.tag]
+        viewModel.selectedCategory = viewModel.categories[sender.tag]
         updateSaveButtonState()
     }
 
@@ -206,7 +200,7 @@ final class TodoAddViewController: UIViewController {
             self.selectedDateLabel.text = dateFormatter.string(from: selectedDate)
             self.selectedDateLabel.textColor = .black
             
-            self.selectedDate = selectedDate
+            self.viewModel.selectedDate = selectedDate
             self.updateSaveButtonState()
         }
         datePickerPopup.alpha = 0
@@ -219,21 +213,11 @@ final class TodoAddViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        guard let content = todoTextField.text, !content.isEmpty,
-              let category = selectedCategory,
-              let date = selectedDate
-        else { return }
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-
-        let todoItem = TodoData(context: context)
-        todoItem.content = content
-        todoItem.category = category
-        todoItem.date = date
-        
-        delegate?.didAddTodoItem(todoItem)
-        dismiss(animated: true, completion: nil)
+        viewModel.saveTodo(content: todoTextField.text) { [weak self] todoItem in
+            guard let self = self, let todoItem = todoItem else { return }
+            self.delegate?.didAddTodoItem(todoItem)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 

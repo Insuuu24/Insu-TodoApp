@@ -11,11 +11,9 @@ final class TodoEditViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: TodoEditViewControllerDelegate?
+    private let viewModel = TodoEditViewModel()
     var selectedTodoItem: TodoData?
     var selectedIndex: Int?
-    private var selectedDate: Date?
-    private var selectedCategory: String?
-    private let categories = ["과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
     private var categoryButtons: [UIButton] = []
     
     private let todoHeaderLabel = UILabel().then {
@@ -103,14 +101,14 @@ final class TodoEditViewController: UIViewController {
         if let selectedTodoItem = selectedTodoItem {
             todoTextField.text = selectedTodoItem.content
             
-            selectedDate = selectedTodoItem.date
+            viewModel.selectedDate = selectedTodoItem.date
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             selectedDateLabel.text = dateFormatter.string(from: selectedTodoItem.date)
             selectedDateLabel.textColor = .black
             
-            selectedCategory = selectedTodoItem.category
-            if let index = categories.firstIndex(of: selectedTodoItem.category) {
+            viewModel.selectedCategory = selectedTodoItem.category
+            if let index = viewModel.categories.firstIndex(of: selectedTodoItem.category) {
                 categoryButtons.forEach { button in
                     button.backgroundColor = .white
                     button.setTitleColor(.black, for: .normal)
@@ -124,7 +122,7 @@ final class TodoEditViewController: UIViewController {
     }
     
     private func configureCategoryButtons() {
-        for (index, category) in categories.enumerated() {
+        for (index, category) in viewModel.categories.enumerated() {
             let button = UIButton(type: .system)
             button.setTitle(category, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -195,12 +193,8 @@ final class TodoEditViewController: UIViewController {
         todoTextField.leftViewMode = .always
     }
     
-    private func isFormComplete() -> Bool {
-        return selectedCategory != nil && selectedDate != nil && !(todoTextField.text?.isEmpty ?? true)
-    }
-    
     private func updateSaveButtonState() {
-        if isFormComplete() {
+        if viewModel.isFormComplete(content: todoTextField.text) {
             saveButton.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
             saveButton.isEnabled = true
         } else {
@@ -218,7 +212,7 @@ final class TodoEditViewController: UIViewController {
         }
         sender.backgroundColor = UIColor(red: 0.34, green: 0.37, blue: 0.49, alpha: 1.00)
         sender.setTitleColor(.white, for: .normal)
-        selectedCategory = categories[sender.tag]
+        viewModel.selectCategory(at: sender.tag)
         updateSaveButtonState()
     }
     
@@ -231,8 +225,8 @@ final class TodoEditViewController: UIViewController {
             self.selectedDateLabel.text = dateFormatter.string(from: selectedDate)
             self.selectedDateLabel.textColor = .black
             
-            self.selectedDate = selectedDate
-            self.updateSaveButtonState()
+            viewModel.selectDate(selectedDate)
+            updateSaveButtonState()
         }
         datePickerPopup.alpha = 0
         view.addSubview(datePickerPopup)
@@ -243,27 +237,12 @@ final class TodoEditViewController: UIViewController {
     }
     
     @objc private func updateSaveButtonTapped() {
-        guard saveButton.isEnabled,
-              let content = todoTextField.text,
-              let date = selectedDate,
-              let category = selectedCategory,
-              let item = selectedTodoItem
-        else { return }
-        
-        item.content = content
-        item.category = category
-        item.date = date
-
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        do {
-            try context.save()
-        } catch {
-            print("Error saving updated todo item: \(error)")
+        guard let item = selectedTodoItem else { return }
+        viewModel.updateTodo(content: todoTextField.text, item: item) { [weak self] success in
+            guard let self = self, success else { return }
+            self.delegate?.didUpdateTodoItem(item, at: self.selectedIndex ?? 0)
+            self.dismiss(animated: true, completion: nil)
         }
-
-        delegate?.didUpdateTodoItem(item, at: selectedIndex ?? 0)
-        dismiss(animated: true, completion: nil)
     }
 }
 

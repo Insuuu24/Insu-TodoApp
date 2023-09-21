@@ -11,9 +11,7 @@ final class TodoListViewController: UIViewController {
         set { TodoDataManager.shared.todoItems = newValue }
     }
 
-    var displayedItems: [TodoData] = []
-    var sections: [String: [TodoData]] = [:]
-    var todayCategories = ["전체", "과제📚", "독서📔", "운동🏃🏻", "프로젝트🧑🏻‍💻", "기타"]
+    private let viewModel = TodoListViewModel()
     private let barColor = UIView()
 
     private let listTableView = UITableView(frame: .zero, style: .insetGrouped).then {
@@ -53,9 +51,8 @@ final class TodoListViewController: UIViewController {
 
         configureNav()
         configureUI()
-        updateCategories(todayCategories)
-        getItemsForCategory("전체")
-        displayedItems = TodoDataManager.shared.todoItems
+        updateCategories(viewModel.todayCategories)
+        viewModel.loadItemsForCategory("전체")
     }
 
     // MARK: - Helper
@@ -178,22 +175,6 @@ final class TodoListViewController: UIViewController {
         }
     }
 
-    func getItemsForCategory(_ category: String) {
-        if category == "전체" {
-            displayedItems = TodoDataManager.shared.todoItems
-            sections = [:]
-            for category in todayCategories where category != "전체" {
-                let items = TodoDataManager.shared.todoItems.filter { $0.category == category }
-                if !items.isEmpty {
-                    sections[category] = items
-                }
-            }
-        } else {
-            displayedItems = TodoDataManager.shared.todoItems.filter { $0.category == category }
-            sections = [category: displayedItems]
-        }
-    }
-
     // MARK: - Actions
 
     @objc private func categoryTapped(_ sender: UITapGestureRecognizer) {
@@ -220,7 +201,7 @@ final class TodoListViewController: UIViewController {
         }
 
         guard let selectedCategory = label.text else { return }
-        getItemsForCategory(selectedCategory)
+        viewModel.loadItemsForCategory(selectedCategory)
         listTableView.reloadData()
     }
 
@@ -245,51 +226,51 @@ final class TodoListViewController: UIViewController {
 
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return displayedItems.count == TodoDataManager.shared.todoItems.count ? sections.count : 1
+        return viewModel.displayedItems.count == TodoDataManager.shared.todoItems.count ? viewModel.sections.count : 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if displayedItems.count == TodoDataManager.shared.todoItems.count {
-            let category = Array(sections.keys)[section]
-            return sections[category]?.count ?? 0
+        if viewModel.displayedItems.count == TodoDataManager.shared.todoItems.count {
+            let category = Array(viewModel.sections.keys)[section]
+            return viewModel.sections[category]?.count ?? 0
         } else {
-            return displayedItems.count
+            return viewModel.displayedItems.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoListCell", for: indexPath) as! TodoListCell
-        if displayedItems.count == TodoDataManager.shared.todoItems.count {
-            let category = Array(sections.keys)[indexPath.section]
-            guard let item = sections[category]?[indexPath.row] else { return UITableViewCell() }
+        if viewModel.displayedItems.count == TodoDataManager.shared.todoItems.count {
+            let category = Array(viewModel.sections.keys)[indexPath.section]
+            guard let item = viewModel.sections[category]?[indexPath.row] else { return UITableViewCell() }
             cell.configure(with: item)
         } else {
-            let item = displayedItems[indexPath.row]
+            let item = viewModel.displayedItems[indexPath.row]
             cell.configure(with: item)
         }
         return cell
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if displayedItems.count == TodoDataManager.shared.todoItems.count {
-            return Array(sections.keys)[section]
+        if viewModel.displayedItems.count == TodoDataManager.shared.todoItems.count {
+            return Array(viewModel.sections.keys)[section]
         } else {
             return nil
         }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if displayedItems.count == TodoDataManager.shared.todoItems.count {
-            let category = Array(sections.keys)[section]
-            return sections[category]?.isEmpty ?? true ? 0.0 : 30.0
+        if viewModel.displayedItems.count == TodoDataManager.shared.todoItems.count {
+            let category = Array(viewModel.sections.keys)[section]
+            return viewModel.sections[category]?.isEmpty ?? true ? 0.0 : 30.0
         } else {
             return 0.0
         }
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let category = todayCategories[section]
-        if let items = sections[category], !items.isEmpty {
+        let category = viewModel.todayCategories[section]
+        if let items = viewModel.sections[category], !items.isEmpty {
             return 10.0
         } else {
             return 0.0
@@ -302,12 +283,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            let itemToDelete = self.todoItems[indexPath.row]
-            TodoDataManager.shared.context.delete(itemToDelete)
-            TodoDataManager.shared.todoItems.remove(at: indexPath.row)
-            TodoDataManager.shared.saveTodoItems()
-
-            self.getItemsForCategory("전체")
+            self.viewModel.deleteItem(at: indexPath.row)
+            self.viewModel.loadItemsForCategory("전체")
             tableView.reloadData()
             completionHandler(true)
         }
@@ -317,13 +294,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let completeAction = UIContextualAction(style: .normal, title: nil) { _, _, completionHandler in
-            let completedItem = self.todoItems[indexPath.row]
-            TodoDataManager.shared.completedItems.append(completedItem)
-            TodoDataManager.shared.todoItems.remove(at: indexPath.row)
-            TodoDataManager.shared.saveTodoItems()
-            TodoDataManager.shared.saveCompletedItems()
-
-            self.getItemsForCategory("전체")
+            self.viewModel.completeItem(at: indexPath.row)
+            self.viewModel.loadItemsForCategory("전체")
             tableView.reloadData()
             completionHandler(true)
         }
@@ -339,7 +311,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editVC = TodoEditViewController()
         editVC.delegate = self
-        let selectedItem = todoItems[indexPath.row]
+        let selectedItem = viewModel.displayedItems[indexPath.row]
         let selectedIndex = indexPath.row
         editVC.selectedTodoItem = selectedItem
         editVC.selectedIndex = selectedIndex
@@ -363,9 +335,8 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension TodoListViewController: TodoAddViewControllerDelegate {
     func didAddTodoItem(_ item: TodoData) {
-        TodoDataManager.shared.todoItems.append(item)
-        TodoDataManager.shared.saveTodoItems()
-        getItemsForCategory("전체")
+        viewModel.addItem(item)
+        viewModel.loadItemsForCategory("전체")
         listTableView.reloadData()
     }
 }
@@ -374,9 +345,8 @@ extension TodoListViewController: TodoAddViewControllerDelegate {
 
 extension TodoListViewController: TodoEditViewControllerDelegate {
     func didUpdateTodoItem(_ item: TodoData, at index: Int) {
-        TodoDataManager.shared.todoItems[index] = item
-        TodoDataManager.shared.saveTodoItems()
-        getItemsForCategory("전체")
+        viewModel.updateItem(item, at: index)
+        viewModel.loadItemsForCategory("전체")
         listTableView.reloadData()
     }
 }
