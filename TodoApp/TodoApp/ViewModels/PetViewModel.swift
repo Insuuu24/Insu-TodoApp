@@ -18,18 +18,26 @@ final class PetViewModel {
     // MARK: - Input
     
     func fetchRandomCatImage(completion: @escaping (Result<UIImage, Error>) -> Void) {
+        isLoading = true
+        
+        fetchImageUrl { result in
+            switch result {
+            case .success(let imageUrl):
+                self.downloadImage(from: imageUrl, completion: completion)
+            case .failure(let error):
+                self.isLoading = false
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func fetchImageUrl(completion: @escaping (Result<URL, Error>) -> Void) {
         guard let url = URL(string: "https://api.thecatapi.com/v1/images/search") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        isLoading = true
-        
-        // MARK: - Logics
-        
         URLSession.shared.dataTask(with: request) { data, _, error in
-            self.isLoading = false
-            
             if let error = error {
                 completion(.failure(error))
                 return
@@ -45,19 +53,24 @@ final class PetViewModel {
                     return
                 }
                 
-                KingfisherManager.shared.retrieveImage(with: petImageUrl, options: nil, progressBlock: nil, completionHandler: { result in
-                    switch result {
-                    case .success(let value):
-                        self.catImage = value.image
-                        completion(.success(value.image))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                })
+                completion(.success(petImageUrl))
                 
             } catch let jsonError {
                 completion(.failure(jsonError))
             }
         }.resume()
+    }
+    
+    private func downloadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let value):
+                self.catImage = value.image
+                completion(.success(value.image))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }
